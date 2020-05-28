@@ -4,7 +4,5 @@ using System.Text;
 
 namespace ProjectManager.Domain.Models
 {
-    public class ProjectTask : ProjectComponent
-    {
-    }
+    public class ProjectTask : ProjectComponent { }
 }
