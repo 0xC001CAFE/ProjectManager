@@ -8,23 +8,23 @@ namespace ProjectManager.Domain.Services.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IUserAccountService userAccountService;
+        private readonly IUserAccountDataService accountData;
 
-        public AuthenticationService(IUserAccountService userAccountService)
+        public AuthenticationService(IUserAccountDataService userAccountDataService)
         {
-            this.userAccountService = userAccountService;
+            accountData = userAccountDataService;
         }
 
         public async Task<UserAccount> LoginByEmail(string email, string password)
         {
-            var userAccount = await userAccountService.GetByEmail(email);
+            var userAccount = await accountData.GetByEmail(email);
 
             return LoginByUserAccount(userAccount, password);
         }
 
         public async Task<UserAccount> LoginByUsername(string username, string password)
         {
-            var userAccount = await userAccountService.GetByUsername(username);
+            var userAccount = await accountData.GetByUsername(username);
 
             return LoginByUserAccount(userAccount, password);
         }
@@ -39,9 +39,9 @@ namespace ProjectManager.Domain.Services.Authentication
 
             if (password != confirmedPassword) return RegistrationResult.PasswordsDoNotMatch;
 
-            if (await userAccountService.UsernameExists(username)) return RegistrationResult.UsernameAlreadyExists;
+            if (await accountData.UsernameExists(username)) return RegistrationResult.UsernameAlreadyExists;
 
-            if (await userAccountService.EmailExists(email)) return RegistrationResult.EmailAlreadyExists;
+            if (await accountData.EmailExists(email)) return RegistrationResult.EmailAlreadyExists;
 
             var userAccount = new UserAccount
             {
@@ -50,7 +50,7 @@ namespace ProjectManager.Domain.Services.Authentication
                 Password = password
             };
 
-            await userAccountService.Create(userAccount);
+            await accountData.Create(userAccount);
 
             return RegistrationResult.Success;
         }

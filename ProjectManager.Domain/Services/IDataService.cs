@@ -10,10 +10,10 @@ namespace ProjectManager.Domain.Services
     {
         Task<T> GetById(string id);
 
-        Task<T> Create(T entity);
+        Task<T> Create(T model);
 
-        Task<T> UpdateById(string id, T entity);
+        Task<T> UpdateById(string id, T model);
 
-        Task<bool> DeleteById(string id);
+        Task<T> DeleteById(string id);
     }
 }

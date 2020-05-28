@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Domain.Services
 {
-    public interface IUserAccountService : IDataService<UserAccount>
+    public interface IUserAccountDataService : IDataService<UserAccount>
     {
         Task<UserAccount> GetByUsername(string username);
 
