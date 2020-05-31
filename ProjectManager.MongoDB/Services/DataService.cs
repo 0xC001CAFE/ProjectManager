@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using ProjectManager.Domain.Models;
 using ProjectManager.Domain.Services;
 using System;
@@ -15,6 +16,13 @@ namespace ProjectManager.MongoDB.Services
         public DataService(IMongoCollection<T> modelCollection)
         {
             this.modelCollection = modelCollection;
+        }
+
+        public DataService(IDatabaseAccess databaseAccess, string collectionName, BsonClassMap<T> customClassMap)
+        {
+            BsonClassMap.RegisterClassMap(customClassMap);
+
+            modelCollection = databaseAccess.GetCollection<T>(collectionName);
         }
 
         public async Task<T> Create(T model)

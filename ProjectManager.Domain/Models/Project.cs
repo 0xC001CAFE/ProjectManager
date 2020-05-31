@@ -6,7 +6,7 @@ namespace ProjectManager.Domain.Models
 {
     public class Project : ProjectComponent
     {
-        public UserAccount Owner { get; set; }
+        public string OwnerId { get; set; }
         public IEnumerable<ProjectTask> Tasks { get; set; }
     }
 }
