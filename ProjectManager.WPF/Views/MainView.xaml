@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager.WPF.Views"
+        xmlns:controls="clr-namespace:ProjectManager.WPF.Controls"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
     <Grid Margin="10">
@@ -14,27 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <StackPanel>
-                <TextBlock Text="Meine Projekte" Style="{StaticResource ResourceKey=HeadingMedium}"/>
-
-                <ListBox ItemsSource="{Binding Path=Projects}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding ConverterCulture="de-DE" StringFormat="{}{0:d} - {1:d}">
-                                            <Binding Path="DateRange.StartDate"/>
-                                            <Binding Path="DateRange.EndDate"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
+            <controls:ProjectSelection/>
         </StackPanel>
     </Grid>
 </Window>

@@ -18,4 +18,8 @@
     <Style TargetType="ListBoxItem">
         <Setter Property="Padding" Value="10"/>
     </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
 </ResourceDictionary>
