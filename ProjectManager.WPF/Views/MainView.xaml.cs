@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,8 @@ namespace ProjectManager.WPF.Views
         public MainView()
         {
             InitializeComponent();
+
+            DataContext = new MainViewModel();
         }
     }
 }

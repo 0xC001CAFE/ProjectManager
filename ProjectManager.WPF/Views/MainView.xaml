@@ -6,7 +6,35 @@
         xmlns:local="clr-namespace:ProjectManager.WPF.Views"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <StackPanel>
+                <TextBlock Text="Meine Projekte" Style="{StaticResource ResourceKey=HeadingMedium}"/>
+
+                <ListBox ItemsSource="{Binding Path=Projects}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding ConverterCulture="de-DE" StringFormat="{}{0:d} - {1:d}">
+                                            <Binding Path="DateRange.StartDate"/>
+                                            <Binding Path="DateRange.EndDate"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
