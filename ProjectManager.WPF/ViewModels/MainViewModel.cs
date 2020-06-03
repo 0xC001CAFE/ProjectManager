@@ -18,7 +18,8 @@ namespace ProjectManager.WPF.ViewModels
                 {
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(7d)
-                }
+                },
+                Description = "Beschreibung des Projekts 1"
             });
 
             Projects.Add(new Project
@@ -28,7 +29,8 @@ namespace ProjectManager.WPF.ViewModels
                 {
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(7d)
-                }
+                },
+                Description = "Beschreibung des Projekts 2"
             });
 
             Projects.Add(new Project
@@ -38,7 +40,8 @@ namespace ProjectManager.WPF.ViewModels
                 {
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now.AddDays(7d)
-                }
+                },
+                Description = "Beschreibung des Projekts 3"
             });
         }
     }
