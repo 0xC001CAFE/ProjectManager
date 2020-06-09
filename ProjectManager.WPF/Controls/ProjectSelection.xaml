@@ -9,7 +9,9 @@
     <StackPanel>
         <TextBlock Text="Meine Projekte" Style="{StaticResource ResourceKey=HeadingMedium}"/>
 
-        <ListBox ItemsSource="{Binding Path=Projects}" Margin="0,0,0,10">
+        <ListBox ItemsSource="{Binding Path=Projects}"
+                 SelectedItem="{Binding Path=SelectedProject}"
+                 Margin="0,0,0,10">
             <ListBox.Resources>
                 <Style TargetType="ListBoxItem"
                        BasedOn="{StaticResource ResourceKey={x:Type TypeName=ListBoxItem}}">

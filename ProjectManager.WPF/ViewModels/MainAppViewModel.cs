@@ -7,6 +7,19 @@ namespace ProjectManager.WPF.ViewModels
 {
     public class MainAppViewModel : ViewModelBase
     {
+        private Project selectedProject;
+
+        public Project SelectedProject
+        {
+            get { return selectedProject; }
+            set
+            {
+                selectedProject = value;
+
+                OnPropertyChanged(nameof(SelectedProject));
+            }
+        }
+
         public List<Project> Projects { get; private set; } = new List<Project>();
 
         public MainAppViewModel()

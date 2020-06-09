@@ -22,5 +22,7 @@
         <StackPanel Grid.Column="0" Margin="10,0">
             <controls:ProjectSelection/>
         </StackPanel>
+
+        <local:ProjectView Grid.Column="1"/>
     </Grid>
 </UserControl>
