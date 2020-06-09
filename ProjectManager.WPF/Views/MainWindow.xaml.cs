@@ -1,5 +1,4 @@
-﻿using ProjectManager.WPF.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -14,15 +13,13 @@ using System.Windows.Shapes;
 namespace ProjectManager.WPF.Views
 {
     /// <summary>
-    /// Interaktionslogik für MainView.xaml
+    /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainView : Window
+    public partial class MainWindow : Window
     {
-        public MainView()
+        public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new MainViewModel();
         }
     }
 }

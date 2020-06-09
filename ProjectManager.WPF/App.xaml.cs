@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjectManager.WPF.ViewModels;
+using ProjectManager.WPF.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,15 @@ namespace ProjectManager.WPF
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs eventArgs)
+        {
+            var window = new MainWindow
+            {
+                DataContext = new MainWindowModel()
+            };
+            window.Show();
+
+            base.OnStartup(eventArgs);
+        }
     }
 }
