@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProjectManager.WPF.ViewModels
 {
-    public class MainWindowModel
+    public class MainWindowModel : ViewModelBase
     {
     }
 }

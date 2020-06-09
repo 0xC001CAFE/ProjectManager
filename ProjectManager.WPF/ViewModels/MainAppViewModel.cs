@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProjectManager.WPF.ViewModels
 {
-    public class MainAppViewModel
+    public class MainAppViewModel : ViewModelBase
     {
         public List<Project> Projects { get; private set; } = new List<Project>();
 
