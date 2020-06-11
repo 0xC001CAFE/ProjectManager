@@ -6,5 +6,5 @@
         xmlns:local="clr-namespace:ProjectManager.WPF.Views"
         mc:Ignorable="d"
         Title="Projektmanager" Height="450" Width="800">
-    <local:MainAppView/>
+    <ContentControl Content="{Binding Path=CurrentViewModel}"/>
 </Window>

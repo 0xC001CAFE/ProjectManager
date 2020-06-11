@@ -1,4 +1,5 @@
-﻿using ProjectManager.WPF.ViewModels;
+﻿using ProjectManager.WPF.Messaging;
+using ProjectManager.WPF.ViewModels;
 using ProjectManager.WPF.Views;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,11 @@ namespace ProjectManager.WPF
     {
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
+            IMessenger messenger = new Messenger();
+
             var window = new MainWindow
             {
-                DataContext = new MainWindowModel()
+                DataContext = new MainWindowModel(messenger)
             };
             window.Show();
 

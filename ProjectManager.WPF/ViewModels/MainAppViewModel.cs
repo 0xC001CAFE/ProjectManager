@@ -1,4 +1,6 @@
 ﻿using ProjectManager.Domain.Models;
+using ProjectManager.WPF.Messaging;
+using ProjectManager.WPF.Messaging.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,21 +11,25 @@ namespace ProjectManager.WPF.ViewModels
     {
         private Project selectedProject;
 
+        public ViewModelBase CurrentViewModel { get; private set; }
+
         public Project SelectedProject
         {
-            get { return selectedProject; }
+            get => selectedProject;
             set
             {
                 selectedProject = value;
 
-                OnPropertyChanged(nameof(SelectedProject));
+                messenger.Send(new PropertyChangedMessage<Project>(selectedProject));
             }
         }
 
         public List<Project> Projects { get; private set; } = new List<Project>();
 
-        public MainAppViewModel()
+        public MainAppViewModel(IMessenger messenger) : base(messenger)
         {
+            CurrentViewModel = new ProjectViewModel(messenger);
+
             Projects.Add(new Project
             {
                 Name = "Projekt 1",

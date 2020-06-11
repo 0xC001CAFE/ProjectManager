@@ -1,12 +1,22 @@
 ﻿<Application x:Class="ProjectManager.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ProjectManager.WPF">
+             xmlns:local="clr-namespace:ProjectManager.WPF"
+             xmlns:viewModels="clr-namespace:ProjectManager.WPF.ViewModels"
+             xmlns:views="clr-namespace:ProjectManager.WPF.Views">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Global.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModels:MainAppViewModel}">
+                <views:MainAppView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModels:ProjectViewModel}">
+                <views:ProjectView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

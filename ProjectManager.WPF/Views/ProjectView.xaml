@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock Text="{Binding Path=SelectedProject.Name}"
+        <TextBlock Text="{Binding Path=Project.Name}"
                    Style="{StaticResource ResourceKey=HeadingLarge}"/>
     </StackPanel>
 </UserControl>
