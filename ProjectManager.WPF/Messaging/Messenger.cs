@@ -16,11 +16,25 @@ namespace ProjectManager.WPF.Messaging
             if (!messengerSubscriptions.ContainsKey(messageType)) return;
 
             var subscriptions = messengerSubscriptions[messageType];
-            subscriptions.RemoveAll(subscription => subscription.CanBeRemoved);
+            // contains a copy of the actual subscriptions to prevent an exception
+            // if the same message is subscribed or unsubscribed in the callback method
+            var activeSubscriptions = new List<Subscription>();
+
+            subscriptions.RemoveAll(subscription =>
+            {
+                if (subscription.CanBeRemoved) return true;
+
+                activeSubscriptions.Add(subscription);
+
+                return false;
+            });
 
             if (TryRemoveMessageEntry(messageType)) return;
 
-            subscriptions.ForEach(subscription => subscription.InvokeCallback(message));
+            activeSubscriptions.ForEach(subscription =>
+            {
+                if (subscriptions.Contains(subscription)) subscription.InvokeCallback(message);
+            });
         }
 
         public void Subscribe<T>(Action<T> callback)
