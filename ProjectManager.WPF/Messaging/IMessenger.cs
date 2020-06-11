@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectManager.WPF.Messenger
+namespace ProjectManager.WPF.Messaging
 {
     public interface IMessenger
     {
-        void Register<T>(Action<T> callback);
+        void Subscribe<T>(Action<T> callback);
 
-        void Unregister<T>(object receiver);
+        void Unsubscribe<T>(object subscriber);
 
         void Send<T>(T message);
     }
