@@ -9,7 +9,7 @@
     <StackPanel>
         <TextBlock Text="Meine Projekte" Style="{StaticResource ResourceKey=HeadingMedium}"/>
 
-        <ListBox ItemsSource="{Binding Path=Projects}"
+        <ListBox ItemsSource="{Binding Path=Projects.Result}"
                  SelectedItem="{Binding Path=SelectedProject}"
                  Margin="0,0,0,10">
             <ListBox.Resources>

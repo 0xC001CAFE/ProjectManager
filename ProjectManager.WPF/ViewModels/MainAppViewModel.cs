@@ -1,6 +1,10 @@
 ﻿using ProjectManager.Domain.Models;
+using ProjectManager.Domain.Services;
+using ProjectManager.MongoDB;
+using ProjectManager.MongoDB.Services;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
+using ProjectManager.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +13,13 @@ namespace ProjectManager.WPF.ViewModels
 {
     public class MainAppViewModel : ViewModelBase
     {
-        private Project selectedProject;
+        #region Properties for data binding
 
         public ViewModelBase CurrentViewModel { get; private set; }
 
+        public NotifyTaskCompletion<IEnumerable<Project>> Projects { get; private set; }
+
+        private Project selectedProject;
         public Project SelectedProject
         {
             get => selectedProject;
@@ -24,55 +31,23 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public List<Project> Projects { get; private set; } = new List<Project>();
+        #endregion
 
         public MainAppViewModel(IMessenger messenger) : base(messenger)
         {
             CurrentViewModel = new ProjectViewModel(messenger);
 
-            Projects.Add(new Project
-            {
-                Name = "Projekt 1",
-                Description = "Beschreibung des Projekts 1",
-                DateRange = new DateRange
-                {
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(7)
-                }
-            });
+            // for debugging purposes only
 
-            Projects.Add(new Project
-            {
-                Name = "Projekt 2",
-                Description = "Beschreibung des Projekts 2",
-                DateRange = new DateRange
-                {
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(7)
-                }
-            });
+            IDatabaseAccess databaseAccess = new DatabaseAccess("ProjectManager");
+            IProjectDataService projectDataService = new ProjectDataService(databaseAccess);
 
-            Projects.Add(new Project
+            var userAccount = new UserAccount
             {
-                Name = "Projekt 3",
-                Description = "Beschreibung des Projekts 3",
-                DateRange = new DateRange
-                {
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(7)
-                }
-            });
+                Id = "5ed13657a50aaa09184bdab9"
+            };
 
-            Projects.Add(new Project
-            {
-                Name = "Projekt 4",
-                Description = "Beschreibung des Projekts 4",
-                DateRange = new DateRange
-                {
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(7)
-                }
-            });
+            Projects = new NotifyTaskCompletion<IEnumerable<Project>>(projectDataService.GetAllByUserAccount(userAccount));
         }
     }
 }

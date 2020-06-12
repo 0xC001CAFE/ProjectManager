@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj" />
+    <ProjectReference Include="..\ProjectManager.MongoDB\ProjectManager.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>
