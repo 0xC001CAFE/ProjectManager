@@ -6,8 +6,44 @@
              xmlns:local="clr-namespace:ProjectManager.WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Grid.IsSharedSizeScope="True">
         <TextBlock Text="{Binding Path=Project.Name}"
                    Style="{StaticResource ResourceKey=HeadingLarge}"/>
+
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="Label"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Beginn:" Margin="0,0,10,0"/>
+            <TextBlock Grid.Column="1" Text="{Binding Path=Project.DateRange.StartDate}"/>
+        </Grid>
+
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="Label"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Ende:" Margin="0,0,10,0"/>
+            <TextBlock Grid.Column="1" Text="{Binding Path=Project.DateRange.EndDate}"/>
+        </Grid>
+
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="Label"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Beschreibung:" Margin="0,0,10,0"/>
+            <TextBlock Grid.Column="1" Text="{Binding Path=Project.Description}" TextWrapping="WrapWithOverflow"/>
+        </Grid>
     </StackPanel>
 </UserControl>
