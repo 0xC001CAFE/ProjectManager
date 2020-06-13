@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ProjectManager.WPF.Styles">
+    <Style x:Key="ProjectComponent"
+           TargetType="ListBoxItem"
+           BasedOn="{StaticResource ResourceKey={x:Type TypeName=ListBoxItem}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
+
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding ConverterCulture="de-DE" StringFormat="{}{0:d} - {1:d}">
+                                    <Binding Path="DateRange.StartDate"/>
+                                    <Binding Path="DateRange.EndDate"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ToolTip" Value="{Binding Path=Description}"/>
+    </Style>
+</ResourceDictionary>
