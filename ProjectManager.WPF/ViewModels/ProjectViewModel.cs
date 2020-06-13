@@ -7,39 +7,39 @@ using System.Text;
 
 namespace ProjectManager.WPF.ViewModels
 {
-	public class ProjectViewModel : ViewModelBase
-	{
-		#region Properties for data binding
+    public class ProjectViewModel : ViewModelBase
+    {
+        #region Properties for data binding
 
-		private Project project;
-		public Project Project
+        private Project project;
+        public Project Project
         {
-			get => project;
-			private set
+            get => project;
+            private set
             {
-				project = value;
+                project = value;
 
-				OnPropertyChanged(nameof(Project));
+                OnPropertyChanged(nameof(Project));
             }
         }
 
-		private ProjectTask selectedTask;
-		public ProjectTask SelectedTask
+        private ProjectTask selectedTask;
+        public ProjectTask SelectedTask
         {
-			get => selectedTask;
+            get => selectedTask;
             set
             {
-				selectedTask = value;
+                selectedTask = value;
 
-				messenger.Send(new PropertyChangedMessage<ProjectTask>(selectedTask));
+                messenger.Send(new PropertyChangedMessage<ProjectTask>(selectedTask));
             }
         }
 
         #endregion
 
         public ProjectViewModel(IMessenger messenger) : base(messenger)
-		{
-			messenger.Subscribe<PropertyChangedMessage<Project>>(message => Project = message.PropertyValue);
-		}
-	}
+        {
+            messenger.Subscribe<PropertyChangedMessage<Project>>(message => Project = message.PropertyValue);
+        }
+    }
 }
