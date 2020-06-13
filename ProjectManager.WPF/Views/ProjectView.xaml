@@ -4,46 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectManager.WPF.Views"
+             xmlns:controls="clr-namespace:ProjectManager.WPF.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15"/>
-        </Style>
-    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-    <StackPanel Grid.IsSharedSizeScope="True">
-        <TextBlock Text="{Binding Path=Project.Name}"
-                   Style="{StaticResource ResourceKey=HeadingLarge}"/>
+        <StackPanel Grid.Row="0" Grid.IsSharedSizeScope="True" Margin="0,0,0,20">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="15"/>
+                </Style>
+            </StackPanel.Resources>
 
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition SharedSizeGroup="Label"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Path=Project.Name}"
+                       Style="{StaticResource ResourceKey=HeadingLarge}"/>
 
-            <TextBlock Grid.Column="0" Text="Beginn:" Margin="0,0,10,0"/>
-            <TextBlock Grid.Column="1" Text="{Binding Path=Project.DateRange.StartDate}"/>
-        </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition SharedSizeGroup="Label"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Beginn:" Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=Project.DateRange.StartDate}"/>
+            </Grid>
 
-            <TextBlock Grid.Column="0" Text="Ende:" Margin="0,0,10,0"/>
-            <TextBlock Grid.Column="1" Text="{Binding Path=Project.DateRange.EndDate}"/>
-        </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition SharedSizeGroup="Label"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Ende:" Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=Project.DateRange.EndDate}"/>
+            </Grid>
 
-            <TextBlock Grid.Column="0" Text="Beschreibung:" Margin="0,0,10,0"/>
-            <TextBlock Grid.Column="1" Text="{Binding Path=Project.Description}" TextWrapping="WrapWithOverflow"/>
-        </Grid>
-    </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Beschreibung:" Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=Project.Description}" TextWrapping="WrapWithOverflow"/>
+            </Grid>
+        </StackPanel>
+
+        <controls:TaskSelection Grid.Row="1"/>
+    </Grid>
 </UserControl>
