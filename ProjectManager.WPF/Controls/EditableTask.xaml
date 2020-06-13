@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="ProjectManager.WPF.Controls.EditableTask"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectManager.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Aufgabe bearbeiten" Style="{StaticResource ResourceKey=HeadingMedium}"/>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Name"/>
+            <TextBox Text="{Binding Path=EditableTask.Name}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Beginn"/>
+            <DatePicker SelectedDate="{Binding Path=EditableTask.DateRange.StartDate}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="Ende"/>
+            <DatePicker SelectedDate="{Binding Path=EditableTask.DateRange.EndDate}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Beschreibung"/>
+            <TextBox Text="{Binding Path=EditableTask.Description}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

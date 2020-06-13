@@ -31,10 +31,24 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
+        private ProjectTask editableTask;
+        public ProjectTask EditableTask
+        {
+            get => editableTask;
+            private set
+            {
+                editableTask = value;
+
+                OnPropertyChanged(nameof(EditableTask));
+            }
+        }
+
         #endregion
 
         public MainAppViewModel(IMessenger messenger) : base(messenger)
         {
+            messenger.Subscribe<PropertyChangedMessage<ProjectTask>>(message => EditableTask = message.PropertyValue);
+
             CurrentViewModel = new ProjectViewModel(messenger);
 
             // for debugging purposes only

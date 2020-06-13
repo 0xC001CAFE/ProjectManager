@@ -16,6 +16,7 @@
 
         <ListBox Grid.Row="1"
                  ItemsSource="{Binding Path=Project.Tasks}"
+                 SelectedItem="{Binding Path=SelectedTask}"
                  ItemContainerStyle="{StaticResource ResourceKey=ProjectComponent}"/>
     </Grid>
 </UserControl>
