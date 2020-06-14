@@ -62,7 +62,9 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Beschreibung:" Margin="0,0,10,0"/>
-                <TextBlock Grid.Column="1" Text="{Binding Path=Project.Description}" TextWrapping="WrapWithOverflow"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding Path=Project.Description}"
+                           TextWrapping="WrapWithOverflow"/>
             </Grid>
         </StackPanel>
 

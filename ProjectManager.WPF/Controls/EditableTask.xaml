@@ -8,12 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="StackPanel">
-                <Setter Property="Margin" Value="0,0,0,10"/>
-            </Style>
-
-            <Style TargetType="TextBlock">
-                <Setter Property="FontSize" Value="15"/>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingSmall}">
                 <Setter Property="Margin" Value="0,0,0,5"/>
             </Style>
         </Grid.Resources>
@@ -23,29 +18,57 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Aufgabe bearbeiten" Style="{StaticResource ResourceKey=HeadingMedium}"/>
+        <TextBlock Grid.Row="0"
+                   Text="Aufgabe bearbeiten"
+                   Style="{StaticResource ResourceKey=HeadingMedium}"/>
 
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="Name"/>
-            <TextBox Text="{Binding Path=EditableTask.Name}"/>
-        </StackPanel>
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="2">
-            <TextBlock Text="Beginn"/>
-            <DatePicker SelectedDate="{Binding Path=EditableTask.DateRange.StartDate}"/>
-        </StackPanel>
+            <TextBlock Grid.Row="0" Text="Name"/>
+            <TextBox Grid.Row="1"
+                     HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Path=EditableTask.Name}"/>
+        </Grid>
 
-        <StackPanel Grid.Row="3">
-            <TextBlock Text="Ende"/>
-            <DatePicker SelectedDate="{Binding Path=EditableTask.DateRange.EndDate}"/>
-        </StackPanel>
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="4">
-            <TextBlock Text="Beschreibung"/>
-            <TextBox Text="{Binding Path=EditableTask.Description}"/>
-        </StackPanel>
+            <TextBlock Grid.Row="0" Text="Beginn"/>
+            <DatePicker Grid.Row="1"
+                        SelectedDate="{Binding Path=EditableTask.DateRange.StartDate}"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Ende"/>
+            <DatePicker Grid.Row="1"
+                        SelectedDate="{Binding Path=EditableTask.DateRange.EndDate}"/>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Beschreibung"/>
+            <TextBox Grid.Row="1"
+                     Text="{Binding Path=EditableTask.Description}"
+                     Style="{StaticResource ResourceKey=MultilineTextBox}"/>
+        </Grid>
     </Grid>
 </UserControl>

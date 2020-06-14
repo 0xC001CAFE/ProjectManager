@@ -12,7 +12,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Aufgaben" Style="{StaticResource ResourceKey=HeadingMedium}"/>
+        <TextBlock Grid.Row="0"
+                   Text="Aufgaben"
+                   Style="{StaticResource ResourceKey=HeadingMedium}"/>
 
         <ListBox Grid.Row="1"
                  ItemsSource="{Binding Path=Project.Tasks}"
