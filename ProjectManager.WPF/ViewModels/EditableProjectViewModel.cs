@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Domain.Models;
 using ProjectManager.WPF.Messaging;
+using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,8 @@ namespace ProjectManager.WPF.ViewModels
 
         #endregion
 
-        public EditableProjectViewModel(IMessenger messenger) : base(messenger)
+        public EditableProjectViewModel(IMessenger messenger,
+                                        IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
 
         }

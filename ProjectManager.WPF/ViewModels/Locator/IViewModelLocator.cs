@@ -6,10 +6,10 @@ namespace ProjectManager.WPF.ViewModels.Locator
 {
     public interface IViewModelLocator
     {
-        MainAppViewModel MainAppViewModel { get; }
+        ViewModelFactory<MainAppViewModel> MainAppViewModel { get; }
 
-        ProjectViewModel ProjectViewModel { get; }
+        ViewModelFactory<ProjectViewModel> ProjectViewModel { get; }
 
-        EditableProjectViewModel EditableProjectViewModel { get; }
+        ViewModelFactory<EditableProjectViewModel> EditableProjectViewModel { get; }
     }
 }

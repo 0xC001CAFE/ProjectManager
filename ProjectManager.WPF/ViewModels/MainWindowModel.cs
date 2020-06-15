@@ -1,4 +1,5 @@
 ﻿using ProjectManager.WPF.Messaging;
+using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,9 +14,10 @@ namespace ProjectManager.WPF.ViewModels
 
         #endregion
 
-        public MainWindowModel(IMessenger messenger) : base(messenger)
+        public MainWindowModel(IMessenger messenger,
+                               IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
-            CurrentViewModel = new MainAppViewModel(messenger);
+            CurrentViewModel = viewModelLocator.MainAppViewModel();
         }
     }
 }

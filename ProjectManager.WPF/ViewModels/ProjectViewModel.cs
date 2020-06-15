@@ -1,6 +1,7 @@
 ﻿using ProjectManager.Domain.Models;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
+using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,7 +38,8 @@ namespace ProjectManager.WPF.ViewModels
 
         #endregion
 
-        public ProjectViewModel(IMessenger messenger) : base(messenger)
+        public ProjectViewModel(IMessenger messenger,
+                                IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
             messenger.Subscribe<PropertyChangedMessage<Project>>(message => Project = message.PropertyValue);
         }

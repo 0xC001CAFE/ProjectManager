@@ -5,6 +5,7 @@ using ProjectManager.MongoDB.Services;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
 using ProjectManager.WPF.Models;
+using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,11 +46,12 @@ namespace ProjectManager.WPF.ViewModels
 
         #endregion
 
-        public MainAppViewModel(IMessenger messenger) : base(messenger)
+        public MainAppViewModel(IMessenger messenger,
+                                IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
             messenger.Subscribe<PropertyChangedMessage<ProjectTask>>(message => EditableTask = message.PropertyValue);
 
-            CurrentViewModel = new ProjectViewModel(messenger);
+            CurrentViewModel = viewModelLocator.ProjectViewModel();
 
             // for debugging purposes only
 

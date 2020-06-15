@@ -48,11 +48,27 @@ namespace ProjectManager.WPF
             services.AddSingleton<ProjectViewModel>();
             services.AddSingleton<EditableProjectViewModel>();
 
+            services.AddSingleton<ViewModelFactory<MainAppViewModel>>(provider =>
+            {
+                return () => provider.GetRequiredService<MainAppViewModel>();
+            });
+            services.AddSingleton<ViewModelFactory<ProjectViewModel>>(provider =>
+            {
+                return () => provider.GetRequiredService<ProjectViewModel>();
+            });
+            services.AddSingleton<ViewModelFactory<EditableProjectViewModel>>(provider =>
+            {
+                return () => provider.GetRequiredService<EditableProjectViewModel>();
+            });
+
             #endregion
 
             #region Views
 
-            services.AddSingleton(provider => new MainWindow(provider.GetRequiredService<MainWindowModel>()));
+            services.AddSingleton(provider =>
+            {
+                return new MainWindow(provider.GetRequiredService<MainWindowModel>());
+            });
 
             #endregion
 
