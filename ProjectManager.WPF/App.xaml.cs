@@ -1,4 +1,5 @@
-﻿using ProjectManager.WPF.Messaging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.ViewModels;
 using ProjectManager.WPF.Views;
 using System;
@@ -16,17 +17,41 @@ namespace ProjectManager.WPF
     /// </summary>
     public partial class App : Application
     {
+        private IServiceProvider serviceProvider;
+
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
-            IMessenger messenger = new Messenger();
-
-            var window = new MainWindow
-            {
-                DataContext = new MainWindowModel(messenger)
-            };
-            window.Show();
-
             base.OnStartup(eventArgs);
+
+            ConfigureServices();
+
+            var window = serviceProvider.GetRequiredService<MainWindow>();
+            window.Show();
+        }
+
+        private void ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            #region Services
+
+            services.AddSingleton<IMessenger, Messenger>();
+
+            #endregion
+
+            #region View models
+
+            services.AddSingleton<MainWindowModel>();
+
+            #endregion
+
+            #region Views
+
+            services.AddSingleton(provider => new MainWindow(provider.GetRequiredService<MainWindowModel>()));
+
+            #endregion
+
+            serviceProvider = services.BuildServiceProvider();
         }
     }
 }
