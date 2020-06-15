@@ -18,6 +18,10 @@
             <DataTemplate DataType="{x:Type TypeName=viewModels:ProjectViewModel}">
                 <views:ProjectView/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModels:EditableProjectViewModel}">
+                <views:EditableProjectView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

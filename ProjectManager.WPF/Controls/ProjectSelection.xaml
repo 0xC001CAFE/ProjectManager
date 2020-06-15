@@ -23,6 +23,8 @@
                  SelectedItem="{Binding Path=SelectedProject}"
                  ItemContainerStyle="{StaticResource ResourceKey=ProjectComponent}"/>
 
-        <Button Grid.Row="2" Content="Neues Projekt"/>
+        <Button Grid.Row="2"
+                Content="Neues Projekt"
+                Command="{Binding Path=CreateProjectCommand}"/>
     </Grid>
 </UserControl>

@@ -2,6 +2,7 @@
 using ProjectManager.Domain.Services;
 using ProjectManager.MongoDB;
 using ProjectManager.MongoDB.Services;
+using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
 using ProjectManager.WPF.Models;
@@ -9,6 +10,7 @@ using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace ProjectManager.WPF.ViewModels
 {
@@ -16,7 +18,17 @@ namespace ProjectManager.WPF.ViewModels
     {
         #region Properties for data binding
 
-        public ViewModelBase CurrentViewModel { get; private set; }
+        private ViewModelBase currentViewModel;
+        public ViewModelBase CurrentViewModel
+        {
+            get => currentViewModel;
+            private set
+            {
+                currentViewModel = value;
+
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
 
         public NotifyTaskCompletion<IEnumerable<Project>> Projects { get; private set; }
 
@@ -44,14 +56,22 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
+        public ICommand CreateProjectCommand { get; private set; }
+
         #endregion
 
         public MainAppViewModel(IMessenger messenger,
                                 IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
-            messenger.Subscribe<PropertyChangedMessage<ProjectTask>>(message => EditableTask = message.PropertyValue);
-
             CurrentViewModel = viewModelLocator.ProjectViewModel();
+
+            CreateProjectCommand = new RelayCommand(() =>
+            {
+                CurrentViewModel = viewModelLocator.EditableProjectViewModel();
+            });
+
+            messenger.Subscribe<PropertyChangedMessage<ProjectTask>>(message => EditableTask = message.PropertyValue);
+            messenger.Subscribe<NavigateMessage<ProjectViewModel>>(message => CurrentViewModel = message.ViewModel);
 
             // for debugging purposes only
 

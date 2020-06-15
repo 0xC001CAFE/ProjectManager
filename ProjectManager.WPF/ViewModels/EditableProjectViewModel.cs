@@ -1,9 +1,12 @@
 ﻿using ProjectManager.Domain.Models;
+using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
+using ProjectManager.WPF.Messaging.Messages;
 using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace ProjectManager.WPF.ViewModels
 {
@@ -23,12 +26,17 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
+        public ICommand CancelCommand { get; private set; }
+
         #endregion
 
         public EditableProjectViewModel(IMessenger messenger,
                                         IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
-
+            CancelCommand = new RelayCommand(() =>
+            {
+                messenger.Send(new NavigateMessage<ProjectViewModel>(viewModelLocator.ProjectViewModel()));
+            });
         }
     }
 }
