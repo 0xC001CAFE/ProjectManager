@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.ViewModels;
+using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.Views;
 using System;
 using System.Collections.Generic;
@@ -36,12 +37,16 @@ namespace ProjectManager.WPF
             #region Services
 
             services.AddSingleton<IMessenger, Messenger>();
+            services.AddSingleton<IViewModelLocator, ViewModelLocator>();
 
             #endregion
 
             #region View models
 
             services.AddSingleton<MainWindowModel>();
+            services.AddSingleton<MainAppViewModel>();
+            services.AddSingleton<ProjectViewModel>();
+            services.AddSingleton<EditableProjectViewModel>();
 
             #endregion
 
