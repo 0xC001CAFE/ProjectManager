@@ -1,5 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ProjectManager.Domain.Services;
+using ProjectManager.MongoDB;
+using ProjectManager.MongoDB.Services;
 using ProjectManager.WPF.Messaging;
+using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels;
 using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.Views;
@@ -38,6 +42,12 @@ namespace ProjectManager.WPF
 
             services.AddSingleton<IMessenger, Messenger>();
             services.AddSingleton<IViewModelLocator, ViewModelLocator>();
+            services.AddSingleton<IDatabaseAccess>(provider =>
+            {
+                return new DatabaseAccess("ProjectManager");
+            });
+            services.AddSingleton<IProjectDataService, ProjectDataService>();
+            services.AddSingleton<IProjectRepository, ProjectRepository>();
 
             #endregion
 

@@ -6,9 +6,11 @@ using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
 using ProjectManager.WPF.Models;
+using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 
@@ -16,6 +18,8 @@ namespace ProjectManager.WPF.ViewModels
 {
     public class MainAppViewModel : ViewModelBase
     {
+        private readonly IProjectRepository projectRepository;
+
         #region Properties for data binding
 
         private ViewModelBase currentViewModel;
@@ -30,7 +34,7 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public NotifyTaskCompletion<IEnumerable<Project>> Projects { get; private set; }
+        public NotifyTaskCompletion<ObservableCollection<Project>> Projects => projectRepository.Projects;
 
         private Project selectedProject;
         public Project SelectedProject
@@ -61,8 +65,11 @@ namespace ProjectManager.WPF.ViewModels
         #endregion
 
         public MainAppViewModel(IMessenger messenger,
-                                IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
+                                IViewModelLocator viewModelLocator,
+                                IProjectRepository projectRepository) : base(messenger, viewModelLocator)
         {
+            this.projectRepository = projectRepository;
+
             CurrentViewModel = viewModelLocator.ProjectViewModel();
 
             CreateProjectCommand = new RelayCommand(() =>
@@ -72,18 +79,6 @@ namespace ProjectManager.WPF.ViewModels
 
             messenger.Subscribe<PropertyChangedMessage<ProjectTask>>(message => EditableTask = message.PropertyValue);
             messenger.Subscribe<NavigateMessage<ProjectViewModel>>(message => CurrentViewModel = message.ViewModel);
-
-            // for debugging purposes only
-
-            IDatabaseAccess databaseAccess = new DatabaseAccess("ProjectManager");
-            IProjectDataService projectDataService = new ProjectDataService(databaseAccess);
-
-            var userAccount = new UserAccount
-            {
-                Id = "5ed13657a50aaa09184bdab9"
-            };
-
-            Projects = new NotifyTaskCompletion<IEnumerable<Project>>(projectDataService.GetAllByUserAccount(userAccount));
         }
     }
 }
