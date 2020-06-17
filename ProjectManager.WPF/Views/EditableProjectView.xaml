@@ -7,8 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingSmall}">
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -16,8 +26,56 @@
                    Text="Projekt bearbeiten"
                    Style="{StaticResource ResourceKey=HeadingLarge}"/>
 
-        <Button Grid.Row="1"
-                Content="Abbrechen"
-                Command="{Binding Path=CancelCommand}"/>
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Name"/>
+            <TextBox Grid.Row="1"
+                     Text="{Binding Path=Name}"
+                     HorizontalScrollBarVisibility="Auto"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Beginn"/>
+            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=StartDate}"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Ende"/>
+            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=EndDate}"/>
+        </Grid>
+
+        <Grid Grid.Row="4" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Beschreibung"/>
+            <TextBox Grid.Row="1"
+                     Text="{Binding Path=Description}"
+                     Style="{StaticResource ResourceKey=MultilineTextBox}"/>
+        </Grid>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Speichern"
+                    Margin="0,0,10,0"
+                    Command="{Binding Path=SaveCommand}"/>
+
+            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
