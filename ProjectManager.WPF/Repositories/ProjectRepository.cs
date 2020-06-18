@@ -27,12 +27,14 @@ namespace ProjectManager.WPF.Repositories
 
         public void Load()
         {
-            var task = projectDataService.GetAllByUserAccount(userAccount).ContinueWith(task =>
+            var task = new Func<Task<ObservableCollection<Project>>>(async () =>
             {
-                return new ObservableCollection<Project>(task.Result);
+                var projects = await projectDataService.GetAllByUserAccount(userAccount);
+
+                return new ObservableCollection<Project>(projects);
             });
 
-            Projects = new NotifyTaskCompletion<ObservableCollection<Project>>(task);
+            Projects = new NotifyTaskCompletion<ObservableCollection<Project>>(task());
         }
 
         public async Task Add(Project project)
