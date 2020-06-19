@@ -43,5 +43,12 @@ namespace ProjectManager.WPF.Repositories
 
             Projects.Result.Add(storedProject);
         }
+
+        public async Task Update(Project project)
+        {
+            await projectDataService.UpdateById(project.Id, project);
+
+            // update local list
+        }
     }
 }

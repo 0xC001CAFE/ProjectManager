@@ -97,6 +97,8 @@ namespace ProjectManager.WPF.ViewModels
             SaveCommand = new AsyncCommand(Save, success =>
             {
                 if (!success) Debug.WriteLine("An error occurred while saving the project.");
+
+                messenger.Send(new NavigateMessage(typeof(ProjectViewModel)));
             });
 
             CancelCommand = new RelayCommand(() =>
@@ -123,7 +125,12 @@ namespace ProjectManager.WPF.ViewModels
         {
             if (editMode)
             {
-                // update project
+                editableProject.Name = name;
+                editableProject.DateRange.StartDate = startDate ?? default;
+                editableProject.DateRange.EndDate = endDate ?? default;
+                editableProject.Description = description;
+
+                await projectRepository.Update(editableProject);
 
                 return;
             }
