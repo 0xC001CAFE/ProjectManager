@@ -6,7 +6,9 @@ using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ProjectManager.WPF.ViewModels
@@ -14,8 +16,21 @@ namespace ProjectManager.WPF.ViewModels
     public class EditableProjectViewModel : ViewModelBase
     {
         private readonly IProjectRepository projectRepository;
+        private Project editableProject;
 
         #region Properties for data binding
+
+        private bool editMode;
+        public bool EditMode
+        {
+            get => editMode;
+            private set
+            {
+                editMode = value;
+
+                OnPropertyChanged(nameof(EditMode));
+            }
+        }
 
         private string name;
         public string Name
@@ -29,8 +44,8 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        private DateTime startDate;
-        public DateTime StartDate
+        private DateTime? startDate;
+        public DateTime? StartDate
         {
             get => startDate;
             set
@@ -41,8 +56,8 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        private DateTime endDate;
-        public DateTime EndDate
+        private DateTime? endDate;
+        public DateTime? EndDate
         {
             get => endDate;
             set
@@ -77,31 +92,54 @@ namespace ProjectManager.WPF.ViewModels
         {
             this.projectRepository = projectRepository;
 
-            SaveCommand = new RelayCommand(Save);
-            CancelCommand = new RelayCommand(SendNavigateMessage);
+            #region Commands
+
+            SaveCommand = new AsyncCommand(Save, success =>
+            {
+                if (!success) Debug.WriteLine("An error occurred while saving the project.");
+            });
+
+            CancelCommand = new RelayCommand(() =>
+            {
+                messenger.Send(new NavigateMessage(typeof(ProjectViewModel)));
+            });
+
+            #endregion
         }
 
-        private void SendNavigateMessage()
+        public void Load(Project project = null)
         {
-            messenger.Send(new NavigateMessage<ProjectViewModel>(viewModelLocator.ProjectViewModel()));
+            editableProject = project;
+
+            EditMode = project != null;
+
+            Name = project?.Name;
+            StartDate = project?.DateRange.StartDate;
+            EndDate = project?.DateRange.EndDate;
+            Description = project?.Description;
         }
 
-        private async void Save()
+        private async Task Save()
         {
+            if (editMode)
+            {
+                // update project
+
+                return;
+            }
+
             var project = new Project
             {
                 Name = name,
                 DateRange = new DateRange
                 {
-                    StartDate = startDate,
-                    EndDate = endDate
+                    StartDate = startDate ?? default,
+                    EndDate = endDate ?? default
                 },
                 Description = description
             };
 
             await projectRepository.Add(project);
-
-            SendNavigateMessage();
         }
     }
 }

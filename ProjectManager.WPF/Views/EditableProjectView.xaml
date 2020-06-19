@@ -6,13 +6,25 @@
              xmlns:local="clr-namespace:ProjectManager.WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.Resources>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingSmall}">
-                <Setter Property="Margin" Value="0,0,0,5"/>
-            </Style>
-        </Grid.Resources>
+    <UserControl.Resources>
+        <!-- title -->
+        <Style x:Key="Title" TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingLarge}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=EditMode}" Value="True">
+                    <Setter Property="Text" Value="Projekt bearbeiten"/>
+                </DataTrigger>
+            </Style.Triggers>
 
+            <Setter Property="Text" Value="Neues Projekt"/>
+        </Style>
+
+        <!-- label -->
+        <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingSmall}">
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -22,9 +34,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Text="Neues Projekt"
-                   Style="{StaticResource ResourceKey=HeadingLarge}"/>
+        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=Title}"/>
 
         <Grid Grid.Row="1" Margin="0,0,0,10">
             <Grid.RowDefinitions>

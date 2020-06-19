@@ -5,11 +5,11 @@ using System.Text;
 
 namespace ProjectManager.WPF.Messaging.Messages
 {
-    public class NavigateMessage<T> where T : ViewModelBase
+    public class NavigateMessage
     {
-        public T ViewModel { get; private set; }
+        public Type ViewModel { get; private set; }
 
-        public NavigateMessage(T viewModel)
+        public NavigateMessage(Type viewModel)
         {
             ViewModel = viewModel;
         }

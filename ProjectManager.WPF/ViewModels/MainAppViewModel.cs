@@ -60,7 +60,9 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public ICommand CreateProjectCommand { get; private set; }
+        public ICommand EditProjectCommand { get; private set; }
+
+        public ICommand NewProjectCommand { get; private set; }
 
         #endregion
 
@@ -72,13 +74,34 @@ namespace ProjectManager.WPF.ViewModels
 
             CurrentViewModel = viewModelLocator.ProjectViewModel();
 
-            CreateProjectCommand = new RelayCommand(() =>
+            #region Commands
+
+            EditProjectCommand = new RelayCommand(() =>
             {
-                CurrentViewModel = viewModelLocator.EditableProjectViewModel();
+                var viewModel = viewModelLocator.EditableProjectViewModel();
+
+                viewModel.Load(selectedProject);
+                CurrentViewModel = viewModel;
+            }, () => selectedProject != null);
+
+            NewProjectCommand = new RelayCommand(() =>
+            {
+                var viewModel = viewModelLocator.EditableProjectViewModel();
+
+                viewModel.Load();
+                CurrentViewModel = viewModel;
             });
 
-            messenger.Subscribe<PropertyChangedMessage<ProjectTask>>(message => EditableTask = message.PropertyValue);
-            messenger.Subscribe<NavigateMessage<ProjectViewModel>>(message => CurrentViewModel = message.ViewModel);
+            #endregion
+
+            #region Messenger
+
+            messenger.Subscribe<NavigateMessage>(message =>
+            {
+                if (message.ViewModel == typeof(ProjectViewModel)) CurrentViewModel = viewModelLocator.ProjectViewModel();
+            });
+
+            #endregion
         }
     }
 }
