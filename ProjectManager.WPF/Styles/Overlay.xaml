@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ProjectManager.WPF.Styles">
     <!-- panel -->
-    <Style x:Key="OverlayPanel">
-        <Setter Property="Control.VerticalAlignment" Value="Center"/>
-        <Setter Property="Control.Margin" Value="30"/>
+    <Style x:Key="OverlayPanel" TargetType="FrameworkElement">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="30"/>
     </Style>
 
     <!-- text -->
