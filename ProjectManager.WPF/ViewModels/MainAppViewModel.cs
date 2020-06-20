@@ -78,6 +78,7 @@ namespace ProjectManager.WPF.ViewModels
             WeakEventManager<IProjectRepository, ProjectsLoadedEventArgs>.AddHandler(projectRepository, nameof(projectRepository.ProjectsLoaded), (sender, eventArgs) =>
             {
                 if (eventArgs.LoadedSuccessfully) OnPropertyChanged(nameof(Projects));
+                else messenger.Send(new ExceptionOccurredMessage(new Exception("Fehler beim Laden der Projekte. Dieser Fehler tritt auf, wenn keine Verbindung zur Datenbank aufgebaut werden konnte.", eventArgs.Exception)));
             });
 
             #region Commands

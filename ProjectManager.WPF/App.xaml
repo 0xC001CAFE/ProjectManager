@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Global.xaml"/>
                 <ResourceDictionary Source="/Styles/ProjectComponent.xaml"/>
+                <ResourceDictionary Source="/Styles/Overlay.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type TypeName=viewModels:MainAppViewModel}">
