@@ -96,7 +96,14 @@ namespace ProjectManager.WPF.ViewModels
 
             SaveCommand = new AsyncCommand(Save, success =>
             {
-                if (!success) Debug.WriteLine("An error occurred while saving the project.");
+                if (!success)
+                {
+                    Debug.WriteLine("An error occurred while saving the project.");
+
+                    messenger.Send(new ExceptionOccurredMessage(new Exception("Fehler beim Speichern des Projekts. Dieser Fehler tritt auf, wenn keine Verbindung zur Datenbank aufgebaut werden konnte.")));
+
+                    return;
+                }
 
                 messenger.Send(new NavigateMessage(typeof(ProjectViewModel)));
             });
