@@ -13,6 +13,7 @@
     <Grid>
         <ContentControl Content="{Binding Path=CurrentViewModel}"/>
 
+        <!-- overlay -->
         <Grid Background="{StaticResource ResourceKey=OverlayBackgroundColor}">
             <Grid.Visibility>
                 <Binding Path="OverlayMessage"

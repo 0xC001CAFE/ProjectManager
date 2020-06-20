@@ -72,6 +72,7 @@
             <controls:TaskSelection Grid.Row="1"/>
         </Grid>
 
+        <!-- overlay -->
         <Grid Background="White">
             <Grid.Visibility>
                 <Binding Path="Project"
