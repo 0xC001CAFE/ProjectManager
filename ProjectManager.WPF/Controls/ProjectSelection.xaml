@@ -19,7 +19,7 @@
 
         <ListBox Grid.Row="1"
                  Margin="0,0,0,10"
-                 ItemsSource="{Binding Path=Projects.Result}"
+                 ItemsSource="{Binding Path=Projects}"
                  SelectedItem="{Binding Path=SelectedProject}"
                  ItemContainerStyle="{StaticResource ResourceKey=ProjectComponent}"/>
 

@@ -10,7 +10,9 @@ namespace ProjectManager.WPF.Repositories
 {
     public interface IProjectRepository
     {
-        NotifyTaskCompletion<ObservableCollection<Project>> Projects { get; }
+        ObservableCollection<Project> Projects { get; }
+
+        public event EventHandler<ProjectsLoadedEventArgs> ProjectsLoaded;
 
         void Load();
 

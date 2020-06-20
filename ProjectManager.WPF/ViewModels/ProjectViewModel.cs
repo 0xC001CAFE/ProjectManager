@@ -32,7 +32,7 @@ namespace ProjectManager.WPF.ViewModels
             {
                 selectedTask = value;
 
-                messenger.Send(new PropertyChangedMessage<ProjectTask>(selectedTask));
+                messenger.Send(new SelectionChangedMessage<ProjectTask>(selectedTask));
             }
         }
 
@@ -41,7 +41,7 @@ namespace ProjectManager.WPF.ViewModels
         public ProjectViewModel(IMessenger messenger,
                                 IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
-            messenger.Subscribe<PropertyChangedMessage<Project>>(message => Project = message.PropertyValue);
+            messenger.Subscribe<SelectionChangedMessage<Project>>(message => Project = message.SelectedElement);
         }
     }
 }

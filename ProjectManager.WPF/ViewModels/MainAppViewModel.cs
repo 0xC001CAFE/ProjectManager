@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectManager.WPF.ViewModels
@@ -34,7 +35,7 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public NotifyTaskCompletion<ObservableCollection<Project>> Projects => projectRepository.Projects;
+        public ObservableCollection<Project> Projects => projectRepository.Projects;
 
         private Project selectedProject;
         public Project SelectedProject
@@ -44,7 +45,7 @@ namespace ProjectManager.WPF.ViewModels
             {
                 selectedProject = value;
 
-                messenger.Send(new PropertyChangedMessage<Project>(selectedProject));
+                messenger.Send(new SelectionChangedMessage<Project>(selectedProject));
             }
         }
 
@@ -73,6 +74,11 @@ namespace ProjectManager.WPF.ViewModels
             this.projectRepository = projectRepository;
 
             CurrentViewModel = viewModelLocator.ProjectViewModel();
+
+            WeakEventManager<IProjectRepository, ProjectsLoadedEventArgs>.AddHandler(projectRepository, nameof(projectRepository.ProjectsLoaded), (sender, eventArgs) =>
+            {
+                if (eventArgs.LoadedSuccessfully) OnPropertyChanged(nameof(Projects));
+            });
 
             #region Commands
 

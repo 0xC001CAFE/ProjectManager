@@ -4,6 +4,7 @@ using ProjectManager.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,9 @@ namespace ProjectManager.WPF.Repositories
         // for debugging purposes only
         private readonly UserAccount userAccount = new UserAccount { Id = "5ed13657a50aaa09184bdab9" };
 
-        public NotifyTaskCompletion<ObservableCollection<Project>> Projects { get; private set; }
+        public ObservableCollection<Project> Projects { get; private set; }
+
+        public event EventHandler<ProjectsLoadedEventArgs> ProjectsLoaded;
 
         public ProjectRepository(IProjectDataService projectDataService)
         {
@@ -25,23 +28,33 @@ namespace ProjectManager.WPF.Repositories
             Load();
         }
 
-        public void Load()
+        public async void Load()
         {
-            var task = new Func<Task<ObservableCollection<Project>>>(async () =>
+            Exception occurredException = null;
+
+            try
             {
                 var projects = await projectDataService.GetAllByUserAccount(userAccount);
 
-                return new ObservableCollection<Project>(projects);
-            });
+                Projects = new ObservableCollection<Project>(projects);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("An error occurred while loading the projects.");
 
-            Projects = new NotifyTaskCompletion<ObservableCollection<Project>>(task());
+                occurredException = exception;
+            }
+            finally
+            {
+                ProjectsLoaded?.Invoke(this, new ProjectsLoadedEventArgs(occurredException));
+            }
         }
 
         public async Task Add(Project project)
         {
             var storedProject = await projectDataService.CreateByUserAccount(userAccount, project);
 
-            Projects.Result.Add(storedProject);
+            Projects.Add(storedProject);
         }
 
         public async Task Update(Project project)
