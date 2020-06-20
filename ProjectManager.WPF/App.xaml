@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ProjectManager.WPF"
              xmlns:viewModels="clr-namespace:ProjectManager.WPF.ViewModels"
-             xmlns:views="clr-namespace:ProjectManager.WPF.Views">
+             xmlns:views="clr-namespace:ProjectManager.WPF.Views"
+             xmlns:converters="clr-namespace:ProjectManager.WPF.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,6 +24,8 @@
             <DataTemplate DataType="{x:Type TypeName=viewModels:EditableProjectViewModel}">
                 <views:EditableProjectView/>
             </DataTemplate>
+
+            <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

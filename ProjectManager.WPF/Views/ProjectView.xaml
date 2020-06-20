@@ -8,66 +8,81 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.IsSharedSizeScope="True" Margin="0,0,0,20">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="15"/>
-                </Style>
-            </StackPanel.Resources>
+            <StackPanel Grid.Row="0" Grid.IsSharedSizeScope="True" Margin="0,0,0,20">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </StackPanel.Resources>
 
-            <TextBlock Text="{Binding Path=Project.Name}"
-                       Style="{StaticResource ResourceKey=HeadingLarge}"/>
+                <TextBlock Text="{Binding Path=Project.Name}"
+                           Style="{StaticResource ResourceKey=HeadingLarge}"/>
 
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition SharedSizeGroup="Label"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                <Grid Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="Label"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Beginn:" Margin="0,0,10,0"/>
-                <TextBlock Grid.Column="1">
-                    <TextBlock.Text>
-                        <Binding Path="Project.DateRange.StartDate"
-                                 ConverterCulture="de-DE"
-                                 StringFormat="{}{0:D}"/>
-                    </TextBlock.Text>
-                </TextBlock>
-            </Grid>
+                    <TextBlock Grid.Column="0" Text="Beginn:" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1">
+                        <TextBlock.Text>
+                            <Binding Path="Project.DateRange.StartDate"
+                                     ConverterCulture="de-DE"
+                                     StringFormat="{}{0:D}"/>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
 
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition SharedSizeGroup="Label"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                <Grid Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="Label"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Ende:" Margin="0,0,10,0"/>
-                <TextBlock Grid.Column="1">
-                    <TextBlock.Text>
-                        <Binding Path="Project.DateRange.EndDate"
-                                 ConverterCulture="de-DE"
-                                 StringFormat="{}{0:D}"/>
-                    </TextBlock.Text>
-                </TextBlock>
-            </Grid>
+                    <TextBlock Grid.Column="0" Text="Ende:" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1">
+                        <TextBlock.Text>
+                            <Binding Path="Project.DateRange.EndDate"
+                                     ConverterCulture="de-DE"
+                                     StringFormat="{}{0:D}"/>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition SharedSizeGroup="Label"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="Label"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Beschreibung:" Margin="0,0,10,0"/>
-                <TextBlock Grid.Column="1"
-                           Text="{Binding Path=Project.Description}"
-                           TextWrapping="WrapWithOverflow"/>
-            </Grid>
-        </StackPanel>
+                    <TextBlock Grid.Column="0" Text="Beschreibung:" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding Path=Project.Description}"
+                               TextWrapping="WrapWithOverflow"/>
+                </Grid>
+            </StackPanel>
 
-        <controls:TaskSelection Grid.Row="1"/>
+            <controls:TaskSelection Grid.Row="1"/>
+        </Grid>
+
+        <Grid Background="White">
+            <Grid.Visibility>
+                <Binding Path="Project"
+                         Converter="{StaticResource ResourceKey=ObjectToVisibilityConverter}"
+                         ConverterParameter="True"/>
+            </Grid.Visibility>
+
+            <StackPanel Style="{StaticResource ResourceKey=OverlayPanel}">
+                <TextBlock Text="Wähle ein Projekt aus der Liste &quot;Meine Projekte&quot; oder füge ein neues Projekt hinzu."
+                           Style="{StaticResource ResourceKey=OverlayText}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
