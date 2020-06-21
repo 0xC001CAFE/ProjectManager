@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ProjectManager.WPF.ViewModels.States
 {
-	public enum EditableTaskViewModelState
-	{
-		DisplayOnly,
-		Edit,
-		CreateNew
-	}
+    public enum EditableTaskViewModelState
+    {
+        DisplayOnly,
+        Edit,
+        CreateNew
+    }
 }

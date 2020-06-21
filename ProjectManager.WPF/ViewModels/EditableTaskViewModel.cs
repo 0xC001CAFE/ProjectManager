@@ -13,15 +13,15 @@ namespace ProjectManager.WPF.ViewModels
 
         private EditableTaskViewModelState currentState;
         public EditableTaskViewModelState CurrentState
-		{
+        {
             get => currentState;
             private set
-			{
+            {
                 currentState = value;
 
                 OnPropertyChanged(nameof(CurrentState));
-			}
-		}
+            }
+        }
 
         private string name;
         public string Name
