@@ -1,5 +1,6 @@
 ﻿using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.ViewModels.Locator;
+using ProjectManager.WPF.ViewModels.States;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,18 @@ namespace ProjectManager.WPF.ViewModels
     public class EditableTaskViewModel : ViewModelBase
     {
         #region Properties for data binding
+
+        private EditableTaskViewModelState currentState;
+        public EditableTaskViewModelState CurrentState
+		{
+            get => currentState;
+            private set
+			{
+                currentState = value;
+
+                OnPropertyChanged(nameof(CurrentState));
+			}
+		}
 
         private string name;
         public string Name
