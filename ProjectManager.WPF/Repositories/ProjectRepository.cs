@@ -61,11 +61,14 @@ namespace ProjectManager.WPF.Repositories
 
         public async Task<Project> Update(Project project)
         {
-            var storedProject = await projectDataService.UpdateById(project.Id, project);
+            await projectDataService.UpdateById(project.Id, project);
 
-            // update local list
+            // not the best way to update the list of projects
+            var index = Projects.IndexOf(project);
+            Projects.RemoveAt(index);
+            Projects.Insert(index, project);
 
-            return storedProject;
+            return project;
         }
     }
 }

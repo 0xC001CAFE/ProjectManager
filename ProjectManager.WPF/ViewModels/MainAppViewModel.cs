@@ -61,7 +61,10 @@ namespace ProjectManager.WPF.ViewModels
 
                 messenger.Send(new SelectionChangedMessage<Project>(selectedProject));
 
-                CurrentMainViewModel = viewModelLocator.ProjectViewModel();
+                if (currentMainViewModel.GetType() != typeof(ProjectViewModel))
+                {
+                    CurrentMainViewModel = viewModelLocator.ProjectViewModel();
+                }
             }
         }
 
