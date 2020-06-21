@@ -80,9 +80,9 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public ICommand SaveCommand { get; private set; }
+        public ICommand SaveCommand { get; }
 
-        public ICommand CancelCommand { get; private set; }
+        public ICommand CancelCommand { get; }
 
         #endregion
 

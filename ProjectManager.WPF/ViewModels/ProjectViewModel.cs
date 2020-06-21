@@ -41,7 +41,14 @@ namespace ProjectManager.WPF.ViewModels
         public ProjectViewModel(IMessenger messenger,
                                 IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
         {
-            messenger.Subscribe<SelectionChangedMessage<Project>>(message => Project = message.SelectedElement);
+            #region Messenger
+
+            messenger.Subscribe<SelectionChangedMessage<Project>>(message =>
+            {
+                Project = message.SelectedElement;
+            });
+
+            #endregion
         }
     }
 }

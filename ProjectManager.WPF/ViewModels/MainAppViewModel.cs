@@ -61,21 +61,9 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        private ProjectTask editableTask;
-        public ProjectTask EditableTask
-        {
-            get => editableTask;
-            private set
-            {
-                editableTask = value;
+        public ICommand EditProjectCommand { get; }
 
-                OnPropertyChanged(nameof(EditableTask));
-            }
-        }
-
-        public ICommand EditProjectCommand { get; private set; }
-
-        public ICommand NewProjectCommand { get; private set; }
+        public ICommand NewProjectCommand { get; }
 
         #endregion
 

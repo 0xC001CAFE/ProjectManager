@@ -30,8 +30,8 @@
             <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
 
-        <!-- edit and save button -->
-        <Style x:Key="EditSaveButton"
+        <!-- edit or cancel button -->
+        <Style x:Key="EditCancelButton"
                TargetType="Button"
                BasedOn="{StaticResource ResourceKey={x:Type TypeName=Button}}">
             <Style.Triggers>
@@ -41,7 +41,7 @@
                 </DataTrigger>
             </Style.Triggers>
 
-            <Setter Property="Content" Value="Speichern"/>
+            <Setter Property="Content" Value="Abbrechen"/>
         </Style>
 
         <!-- text box for name -->
@@ -145,13 +145,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0"
+                        Content="Speichern"
                         Margin="0,0,10,0"
-                        Style="{StaticResource ResourceKey=EditSaveButton}"
-                        Command="{Binding Path=EditSaveCommand}"/>
+                        Command="{Binding Path=SaveCommand}"/>
 
                 <Button Grid.Column="1"
-                        Content="Abbrechen"
-                        Command="{Binding Path=CancelCommand}"/>
+                        Style="{StaticResource ResourceKey=EditCancelButton}"
+                        Command="{Binding Path=EditCancelCommand}"/>
             </Grid>
         </Grid>
 
