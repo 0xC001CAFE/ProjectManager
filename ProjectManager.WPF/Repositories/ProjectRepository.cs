@@ -50,18 +50,22 @@ namespace ProjectManager.WPF.Repositories
             }
         }
 
-        public async Task Add(Project project)
+        public async Task<Project> Add(Project project)
         {
             var storedProject = await projectDataService.CreateByUserAccount(userAccount, project);
 
             Projects.Add(storedProject);
+
+            return storedProject;
         }
 
-        public async Task Update(Project project)
+        public async Task<Project> Update(Project project)
         {
-            await projectDataService.UpdateById(project.Id, project);
+            var storedProject = await projectDataService.UpdateById(project.Id, project);
 
             // update local list
+
+            return storedProject;
         }
     }
 }

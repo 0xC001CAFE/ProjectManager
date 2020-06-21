@@ -16,8 +16,8 @@ namespace ProjectManager.WPF.Repositories
 
         void Load();
 
-        Task Add(Project project);
+        Task<Project> Add(Project project);
 
-        Task Update(Project project);
+        Task<Project> Update(Project project);
     }
 }

@@ -39,7 +39,7 @@ namespace ProjectManager.WPF.ViewModels
         public ViewModelBase CurrentSideViewModel
         {
             get => currentSideViewModel;
-            set
+            private set
             {
                 currentSideViewModel = value;
 
@@ -57,7 +57,11 @@ namespace ProjectManager.WPF.ViewModels
             {
                 selectedProject = value;
 
+                OnPropertyChanged(nameof(SelectedProject));
+
                 messenger.Send(new SelectionChangedMessage<Project>(selectedProject));
+
+                CurrentMainViewModel = viewModelLocator.ProjectViewModel();
             }
         }
 
@@ -107,6 +111,11 @@ namespace ProjectManager.WPF.ViewModels
             messenger.Subscribe<NavigateMessage>(message =>
             {
                 if (message.ViewModel == typeof(ProjectViewModel)) CurrentMainViewModel = viewModelLocator.ProjectViewModel();
+            });
+
+            messenger.Subscribe<ChangeSelectionMessage<Project>>(message =>
+            {
+                SelectedProject = message.NewSelectedElement;
             });
 
             #endregion

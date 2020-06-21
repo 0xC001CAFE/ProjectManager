@@ -2,6 +2,7 @@
 using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
+using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.ViewModels.States;
 using System;
@@ -14,6 +15,7 @@ namespace ProjectManager.WPF.ViewModels
 {
     public class EditableTaskViewModel : ViewModelBase
     {
+        private readonly IProjectRepository projectRepository;
         private ProjectTask editableTask;
 
         #region Properties for data binding
@@ -85,8 +87,11 @@ namespace ProjectManager.WPF.ViewModels
         #endregion
 
         public EditableTaskViewModel(IMessenger messenger,
-                                     IViewModelLocator viewModelLocator) : base(messenger, viewModelLocator)
+                                     IViewModelLocator viewModelLocator,
+                                     IProjectRepository projectRepository) : base(messenger, viewModelLocator)
         {
+            this.projectRepository = projectRepository;
+
             #region Commands
 
             SaveCommand = new AsyncCommand(Save, () =>

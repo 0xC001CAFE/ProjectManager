@@ -94,7 +94,7 @@ namespace ProjectManager.WPF.ViewModels
 
             #region Commands
 
-            SaveCommand = new AsyncCommand(Save, success =>
+            SaveCommand = new AsyncCommand<Project>(Save, (success, project) =>
             {
                 if (!success)
                 {
@@ -105,7 +105,8 @@ namespace ProjectManager.WPF.ViewModels
                     return;
                 }
 
-                messenger.Send(new NavigateMessage(typeof(ProjectViewModel)));
+                if (editMode) messenger.Send(new NavigateMessage(typeof(ProjectViewModel)));
+                else messenger.Send(new ChangeSelectionMessage<Project>(project));
             });
 
             CancelCommand = new RelayCommand(() =>
@@ -128,7 +129,7 @@ namespace ProjectManager.WPF.ViewModels
             Description = project?.Description;
         }
 
-        private async Task Save()
+        private async Task<Project> Save()
         {
             if (editMode)
             {
@@ -137,9 +138,7 @@ namespace ProjectManager.WPF.ViewModels
                 editableProject.DateRange.EndDate = endDate ?? default;
                 editableProject.Description = description;
 
-                await projectRepository.Update(editableProject);
-
-                return;
+                return await projectRepository.Update(editableProject);
             }
 
             var project = new Project
@@ -153,7 +152,7 @@ namespace ProjectManager.WPF.ViewModels
                 Description = description
             };
 
-            await projectRepository.Add(project);
+            return await projectRepository.Add(project);
         }
     }
 }
