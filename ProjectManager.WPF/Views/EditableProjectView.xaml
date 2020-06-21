@@ -18,7 +18,7 @@
             <Setter Property="Text" Value="Neues Projekt"/>
         </Style>
 
-        <!-- label -->
+        <!-- labels -->
         <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingSmall}">
             <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>

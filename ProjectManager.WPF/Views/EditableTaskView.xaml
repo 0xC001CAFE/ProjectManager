@@ -25,9 +25,59 @@
             <Setter Property="Text" Value="Neue Aufgabe"/>
         </Style>
 
-        <!-- label -->
+        <!-- labels -->
         <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=HeadingSmall}">
             <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+
+        <!-- edit and save button -->
+        <Style x:Key="EditSaveButton"
+               TargetType="Button"
+               BasedOn="{StaticResource ResourceKey={x:Type TypeName=Button}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=CurrentState}"
+                             Value="{x:Static Member=states:EditableTaskViewModelState.DisplayOnly}">
+                    <Setter Property="Content" Value="Bearbeiten"/>
+                </DataTrigger>
+            </Style.Triggers>
+
+            <Setter Property="Content" Value="Speichern"/>
+        </Style>
+
+        <!-- text box for name -->
+        <Style x:Key="NameTextBox"
+               TargetType="TextBox"
+               BasedOn="{StaticResource ResourceKey={x:Type TypeName=TextBox}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=CurrentState}"
+                             Value="{x:Static Member=states:EditableTaskViewModelState.DisplayOnly}">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                </DataTrigger>
+            </Style.Triggers>
+
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        </Style>
+
+        <!-- text box for description -->
+        <Style x:Key="DescriptionTextBox"
+               TargetType="TextBox"
+               BasedOn="{StaticResource ResourceKey=MultilineTextBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=CurrentState}"
+                             Value="{x:Static Member=states:EditableTaskViewModelState.DisplayOnly}">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- date pickers -->
+        <Style TargetType="DatePickerTextBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=CurrentState}"
+                             Value="{x:Static Member=states:EditableTaskViewModelState.DisplayOnly}">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
@@ -53,7 +103,7 @@
                 <TextBlock Grid.Row="0" Text="Name"/>
                 <TextBox Grid.Row="1"
                          Text="{Binding Path=Name}"
-                         HorizontalScrollBarVisibility="Auto"/>
+                         Style="{StaticResource ResourceKey=NameTextBox}"/>
             </Grid>
 
             <Grid Grid.Row="2" Margin="0,0,0,10">
@@ -85,7 +135,7 @@
                 <TextBlock Grid.Row="0" Text="Beschreibung"/>
                 <TextBox Grid.Row="1"
                          Text="{Binding Path=Description}"
-                         Style="{StaticResource ResourceKey=MultilineTextBox}"/>
+                         Style="{StaticResource ResourceKey=DescriptionTextBox}"/>
             </Grid>
 
             <Grid Grid.Row="5">
@@ -96,10 +146,12 @@
 
                 <Button Grid.Column="0"
                         Margin="0,0,10,0"
-                        Content="Bearbeiten"/>
+                        Style="{StaticResource ResourceKey=EditSaveButton}"
+                        Command="{Binding Path=EditSaveCommand}"/>
 
                 <Button Grid.Column="1"
-                        Content="Abbrechen"/>
+                        Content="Abbrechen"
+                        Command="{Binding Path=CancelCommand}"/>
             </Grid>
         </Grid>
 
