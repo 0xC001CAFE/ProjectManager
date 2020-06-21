@@ -18,8 +18,8 @@
 
         <ContentControl Grid.Column="1"
                         Margin="0,0,10,0"
-                        Content="{Binding Path=CurrentViewModel}"/>
+                        Content="{Binding Path=CurrentMainViewModel}"/>
 
-        <controls:EditableTask Grid.Column="2"/>
+        <ContentControl Grid.Column="2" Content="{Binding Path=CurrentSideViewModel}"/>
     </Grid>
 </UserControl>

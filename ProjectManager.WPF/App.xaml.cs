@@ -57,6 +57,7 @@ namespace ProjectManager.WPF
             services.AddSingleton<MainAppViewModel>();
             services.AddSingleton<ProjectViewModel>();
             services.AddSingleton<EditableProjectViewModel>();
+            services.AddSingleton<EditableTaskViewModel>();
 
             services.AddSingleton<ViewModelFactory<MainAppViewModel>>(provider =>
             {
@@ -69,6 +70,10 @@ namespace ProjectManager.WPF
             services.AddSingleton<ViewModelFactory<EditableProjectViewModel>>(provider =>
             {
                 return () => provider.GetRequiredService<EditableProjectViewModel>();
+            });
+            services.AddSingleton<ViewModelFactory<EditableTaskViewModel>>(provider =>
+            {
+                return () => provider.GetRequiredService<EditableTaskViewModel>();
             });
 
             #endregion

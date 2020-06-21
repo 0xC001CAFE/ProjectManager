@@ -25,6 +25,10 @@
                 <views:EditableProjectView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type TypeName=viewModels:EditableTaskViewModel}">
+                <views:EditableTaskView/>
+            </DataTemplate>
+
             <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>

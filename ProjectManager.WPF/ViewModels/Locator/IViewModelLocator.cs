@@ -11,5 +11,7 @@ namespace ProjectManager.WPF.ViewModels.Locator
         ViewModelFactory<ProjectViewModel> ProjectViewModel { get; }
 
         ViewModelFactory<EditableProjectViewModel> EditableProjectViewModel { get; }
+
+        ViewModelFactory<EditableTaskViewModel> EditableTaskViewModel { get; }
     }
 }

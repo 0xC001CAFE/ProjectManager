@@ -23,15 +23,27 @@ namespace ProjectManager.WPF.ViewModels
 
         #region Properties for data binding
 
-        private ViewModelBase currentViewModel;
-        public ViewModelBase CurrentViewModel
+        private ViewModelBase currentMainViewModel;
+        public ViewModelBase CurrentMainViewModel
         {
-            get => currentViewModel;
+            get => currentMainViewModel;
             private set
             {
-                currentViewModel = value;
+                currentMainViewModel = value;
 
-                OnPropertyChanged(nameof(CurrentViewModel));
+                OnPropertyChanged(nameof(CurrentMainViewModel));
+            }
+        }
+
+        private ViewModelBase currentSideViewModel;
+        public ViewModelBase CurrentSideViewModel
+        {
+            get => currentSideViewModel;
+            set
+            {
+                currentSideViewModel = value;
+
+                OnPropertyChanged(nameof(CurrentSideViewModel));
             }
         }
 
@@ -73,7 +85,8 @@ namespace ProjectManager.WPF.ViewModels
         {
             this.projectRepository = projectRepository;
 
-            CurrentViewModel = viewModelLocator.ProjectViewModel();
+            CurrentMainViewModel = viewModelLocator.ProjectViewModel();
+            CurrentSideViewModel = viewModelLocator.EditableTaskViewModel();
 
             WeakEventManager<IProjectRepository, ProjectsLoadedEventArgs>.AddHandler(projectRepository, nameof(projectRepository.ProjectsLoaded), (sender, eventArgs) =>
             {
@@ -88,7 +101,7 @@ namespace ProjectManager.WPF.ViewModels
                 var viewModel = viewModelLocator.EditableProjectViewModel();
 
                 viewModel.Load(selectedProject);
-                CurrentViewModel = viewModel;
+                CurrentMainViewModel = viewModel;
             }, () => selectedProject != null);
 
             NewProjectCommand = new RelayCommand(() =>
@@ -96,7 +109,7 @@ namespace ProjectManager.WPF.ViewModels
                 var viewModel = viewModelLocator.EditableProjectViewModel();
 
                 viewModel.Load();
-                CurrentViewModel = viewModel;
+                CurrentMainViewModel = viewModel;
             });
 
             #endregion
@@ -105,7 +118,7 @@ namespace ProjectManager.WPF.ViewModels
 
             messenger.Subscribe<NavigateMessage>(message =>
             {
-                if (message.ViewModel == typeof(ProjectViewModel)) CurrentViewModel = viewModelLocator.ProjectViewModel();
+                if (message.ViewModel == typeof(ProjectViewModel)) CurrentMainViewModel = viewModelLocator.ProjectViewModel();
             });
 
             #endregion
