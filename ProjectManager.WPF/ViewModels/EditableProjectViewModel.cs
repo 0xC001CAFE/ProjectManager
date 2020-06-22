@@ -60,7 +60,8 @@ namespace ProjectManager.WPF.ViewModels
                     return;
                 }
 
-                messenger.Send(new ChangeSelectionMessage<ProjectModel>(project));
+                if (editMode) messenger.Send(new NavigateMessage(typeof(ProjectViewModel)));
+                else messenger.Send(new ChangeSelectionMessage<ProjectModel>(project));
             });
 
             CancelCommand = new RelayCommand(() =>

@@ -74,9 +74,9 @@ namespace ProjectManager.WPF.Repositories
         {
             var mappedProject = new Project();
             project.MapBack(mappedProject);
-
-            var storedProject = await projectDataService.CreateByUserAccount(userAccount, mappedProject);
-            project.Map(storedProject);
+            
+            await projectDataService.CreateByUserAccount(userAccount, mappedProject);
+            project.Map(mappedProject);
 
             Projects.Add(project);
 
@@ -85,6 +85,11 @@ namespace ProjectManager.WPF.Repositories
 
         public async Task<ProjectModel> Update(ProjectModel project)
         {
+            var storedProject = await projectDataService.GetById(project.Id);
+
+            project.MapBack(storedProject);
+            await projectDataService.UpdateById(storedProject.Id, storedProject);
+
             return project;
         }
     }
