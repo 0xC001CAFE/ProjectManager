@@ -47,10 +47,10 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public ObservableCollection<Project> Projects => projectRepository.Projects;
+        public ObservableCollection<ProjectModel> Projects => projectRepository.Projects;
 
-        private Project selectedProject;
-        public Project SelectedProject
+        private ProjectModel selectedProject;
+        public ProjectModel SelectedProject
         {
             get => selectedProject;
             set
@@ -59,7 +59,7 @@ namespace ProjectManager.WPF.ViewModels
 
                 OnPropertyChanged(nameof(SelectedProject));
 
-                messenger.Send(new SelectionChangedMessage<Project>(selectedProject));
+                messenger.Send(new SelectionChangedMessage<ProjectModel>(selectedProject));
 
                 if (currentMainViewModel.GetType() != typeof(ProjectViewModel))
                 {
@@ -116,7 +116,7 @@ namespace ProjectManager.WPF.ViewModels
                 if (message.ViewModel == typeof(ProjectViewModel)) CurrentMainViewModel = viewModelLocator.ProjectViewModel();
             });
 
-            messenger.Subscribe<ChangeSelectionMessage<Project>>(message =>
+            messenger.Subscribe<ChangeSelectionMessage<ProjectModel>>(message =>
             {
                 SelectedProject = message.NewSelectedElement;
             });

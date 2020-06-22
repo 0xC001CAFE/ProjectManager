@@ -2,6 +2,7 @@
 using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
+using ProjectManager.WPF.Models;
 using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.ViewModels.States;
@@ -16,7 +17,7 @@ namespace ProjectManager.WPF.ViewModels
     public class EditableTaskViewModel : ViewModelBase
     {
         private readonly IProjectRepository projectRepository;
-        private ProjectTask editableTask;
+        private ProjectTaskModel savedTask;
 
         #region Properties for data binding
 
@@ -32,51 +33,15 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        private string name;
-        public string Name
+        private ProjectTaskModel editableTask;
+        public ProjectTaskModel EditableTask
         {
-            get => name;
-            set
+            get => editableTask;
+            private set
             {
-                name = value;
+                editableTask = value;
 
-                OnPropertyChanged(nameof(Name));
-            }
-        }
-
-        private DateTime? startDate;
-        public DateTime? StartDate
-        {
-            get => startDate;
-            set
-            {
-                startDate = value;
-
-                OnPropertyChanged(nameof(StartDate));
-            }
-        }
-
-        private DateTime? endDate;
-        public DateTime? EndDate
-        {
-            get => endDate;
-            set
-            {
-                endDate = value;
-
-                OnPropertyChanged(nameof(EndDate));
-            }
-        }
-
-        private string description;
-        public string Description
-        {
-            get => description;
-            set
-            {
-                description = value;
-
-                OnPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(EditableTask));
             }
         }
 
@@ -111,17 +76,17 @@ namespace ProjectManager.WPF.ViewModels
                     case EditableTaskViewModelState.CreateNew:
                         CurrentState = EditableTaskViewModelState.DisplayOnly;
 
-                        Load(editableTask);
+                        Load(savedTask);
 
                         break;
                 }
-            }, () => editableTask != null);
+            }, () => savedTask != null);
 
             #endregion
 
             #region Messenger
 
-            messenger.Subscribe<SelectionChangedMessage<ProjectTask>>(message =>
+            messenger.Subscribe<SelectionChangedMessage<ProjectTaskModel>>(message =>
             {
                 Load(message.SelectedElement);
             });
@@ -129,16 +94,19 @@ namespace ProjectManager.WPF.ViewModels
             #endregion
         }
 
-        private void Load(ProjectTask projectTask = null)
+        private void Load(ProjectTaskModel projectTask = null)
         {
-            editableTask = projectTask;
+            savedTask = projectTask;
 
             CurrentState = EditableTaskViewModelState.DisplayOnly;
 
-            Name = projectTask?.Name;
-            StartDate = projectTask?.DateRange.StartDate;
-            EndDate = projectTask?.DateRange.EndDate;
-            Description = projectTask?.Description;
+            EditableTask = new ProjectTaskModel
+            {
+                StartDate = projectTask?.StartDate,
+                EndDate = projectTask?.EndDate,
+                Name = projectTask?.Name,
+                Description = projectTask?.Description
+            };
         }
 
         private async Task Save()

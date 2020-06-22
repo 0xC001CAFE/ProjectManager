@@ -17,7 +17,7 @@ namespace ProjectManager.WPF.Repositories
         // for debugging purposes only
         private readonly UserAccount userAccount = new UserAccount { Id = "5ed13657a50aaa09184bdab9" };
 
-        public ObservableCollection<Project> Projects { get; private set; }
+        public ObservableCollection<ProjectModel> Projects { get; private set; }
 
         public event EventHandler<ProjectsLoadedEventArgs> ProjectsLoaded;
 
@@ -36,7 +36,12 @@ namespace ProjectManager.WPF.Repositories
             {
                 var projects = await projectDataService.GetAllByUserAccount(userAccount);
 
-                Projects = new ObservableCollection<Project>(projects);
+                Projects = new ObservableCollection<ProjectModel>();
+
+                foreach (var project in projects)
+                {
+                    Projects.Add(new ProjectModel(project));
+                }
             }
             catch (Exception exception)
             {
@@ -50,24 +55,21 @@ namespace ProjectManager.WPF.Repositories
             }
         }
 
-        public async Task<Project> Add(Project project)
+        public async Task<ProjectModel> Add(ProjectModel project)
         {
-            var storedProject = await projectDataService.CreateByUserAccount(userAccount, project);
+            var mappedProject = new Project();
+            project.MapBack(mappedProject);
 
-            Projects.Add(storedProject);
+            var storedProject = await projectDataService.CreateByUserAccount(userAccount, mappedProject);
+            project.Map(storedProject);
 
-            return storedProject;
+            Projects.Add(project);
+
+            return project;
         }
 
-        public async Task<Project> Update(Project project)
+        public async Task<ProjectModel> Update(ProjectModel project)
         {
-            await projectDataService.UpdateById(project.Id, project);
-
-            // not the best way to update the list of projects
-            var index = Projects.IndexOf(project);
-            Projects.RemoveAt(index);
-            Projects.Insert(index, project);
-
             return project;
         }
     }

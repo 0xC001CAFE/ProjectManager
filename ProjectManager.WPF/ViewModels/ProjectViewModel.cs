@@ -1,6 +1,7 @@
 ﻿using ProjectManager.Domain.Models;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
+using ProjectManager.WPF.Models;
 using ProjectManager.WPF.ViewModels.Locator;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace ProjectManager.WPF.ViewModels
     {
         #region Properties for data binding
 
-        private Project project;
-        public Project Project
+        private ProjectModel project;
+        public ProjectModel Project
         {
             get => project;
             private set
@@ -24,15 +25,15 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        private ProjectTask selectedTask;
-        public ProjectTask SelectedTask
+        private ProjectTaskModel selectedTask;
+        public ProjectTaskModel SelectedTask
         {
             get => selectedTask;
             set
             {
                 selectedTask = value;
 
-                messenger.Send(new SelectionChangedMessage<ProjectTask>(selectedTask));
+                messenger.Send(new SelectionChangedMessage<ProjectTaskModel>(selectedTask));
             }
         }
 
@@ -43,7 +44,7 @@ namespace ProjectManager.WPF.ViewModels
         {
             #region Messenger
 
-            messenger.Subscribe<SelectionChangedMessage<Project>>(message =>
+            messenger.Subscribe<SelectionChangedMessage<ProjectModel>>(message =>
             {
                 Project = message.SelectedElement;
             });

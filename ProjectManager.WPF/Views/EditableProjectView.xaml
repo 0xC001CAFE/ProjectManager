@@ -44,7 +44,7 @@
 
             <TextBlock Grid.Row="0" Text="Name"/>
             <TextBox Grid.Row="1"
-                     Text="{Binding Path=Name}"
+                     Text="{Binding Path=EditableProject.Name}"
                      HorizontalScrollBarVisibility="Auto"/>
         </Grid>
 
@@ -55,7 +55,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Beginn"/>
-            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=StartDate}"/>
+            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=EditableProject.StartDate}"/>
         </Grid>
 
         <Grid Grid.Row="3" Margin="0,0,0,10">
@@ -65,7 +65,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Ende"/>
-            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=EndDate}"/>
+            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=EditableProject.EndDate}"/>
         </Grid>
 
         <Grid Grid.Row="4" Margin="0,0,0,10">
@@ -76,7 +76,7 @@
 
             <TextBlock Grid.Row="0" Text="Beschreibung"/>
             <TextBox Grid.Row="1"
-                     Text="{Binding Path=Description}"
+                     Text="{Binding Path=EditableProject.Description}"
                      Style="{StaticResource ResourceKey=MultilineTextBox}"/>
         </Grid>
 

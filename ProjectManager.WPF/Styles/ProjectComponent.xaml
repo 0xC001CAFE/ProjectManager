@@ -13,8 +13,8 @@
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding ConverterCulture="de-DE" StringFormat="{}{0:d} - {1:d}">
-                                    <Binding Path="DateRange.StartDate"/>
-                                    <Binding Path="DateRange.EndDate"/>
+                                    <Binding Path="StartDate"/>
+                                    <Binding Path="EndDate"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

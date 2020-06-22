@@ -2,6 +2,7 @@
 using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
+using ProjectManager.WPF.Models;
 using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
 using System;
@@ -16,7 +17,7 @@ namespace ProjectManager.WPF.ViewModels
     public class EditableProjectViewModel : ViewModelBase
     {
         private readonly IProjectRepository projectRepository;
-        private Project editableProject;
+        private ProjectModel savedProject;
 
         #region Properties for data binding
 
@@ -32,53 +33,7 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        private string name;
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-
-                OnPropertyChanged(nameof(Name));
-            }
-        }
-
-        private DateTime? startDate;
-        public DateTime? StartDate
-        {
-            get => startDate;
-            set
-            {
-                startDate = value;
-
-                OnPropertyChanged(nameof(StartDate));
-            }
-        }
-
-        private DateTime? endDate;
-        public DateTime? EndDate
-        {
-            get => endDate;
-            set
-            {
-                endDate = value;
-
-                OnPropertyChanged(nameof(EndDate));
-            }
-        }
-
-        private string description;
-        public string Description
-        {
-            get => description;
-            set
-            {
-                description = value;
-
-                OnPropertyChanged(nameof(Description));
-            }
-        }
+        public ProjectModel EditableProject { get; private set; }
 
         public ICommand SaveCommand { get; }
 
@@ -94,7 +49,7 @@ namespace ProjectManager.WPF.ViewModels
 
             #region Commands
 
-            SaveCommand = new AsyncCommand<Project>(Save, (success, project) =>
+            SaveCommand = new AsyncCommand<ProjectModel>(Save, (success, project) =>
             {
                 if (!success)
                 {
@@ -105,7 +60,7 @@ namespace ProjectManager.WPF.ViewModels
                     return;
                 }
 
-                messenger.Send(new ChangeSelectionMessage<Project>(project));
+                messenger.Send(new ChangeSelectionMessage<ProjectModel>(project));
             });
 
             CancelCommand = new RelayCommand(() =>
@@ -116,42 +71,34 @@ namespace ProjectManager.WPF.ViewModels
             #endregion
         }
 
-        public void Load(Project project = null)
+        public void Load(ProjectModel project = null)
         {
-            editableProject = project;
+            savedProject = project;
 
             EditMode = project != null;
 
-            Name = project?.Name;
-            StartDate = project?.DateRange.StartDate;
-            EndDate = project?.DateRange.EndDate;
-            Description = project?.Description;
+            EditableProject = new ProjectModel
+            {
+                StartDate = project?.StartDate,
+                EndDate = project?.EndDate,
+                Name = project?.Name,
+                Description = project?.Description
+            };
         }
 
-        private async Task<Project> Save()
+        private async Task<ProjectModel> Save()
         {
             if (editMode)
             {
-                editableProject.Name = name;
-                editableProject.DateRange.StartDate = startDate ?? default;
-                editableProject.DateRange.EndDate = endDate ?? default;
-                editableProject.Description = description;
+                savedProject.StartDate = EditableProject.StartDate;
+                savedProject.EndDate = EditableProject.EndDate;
+                savedProject.Name = EditableProject.Name;
+                savedProject.Description = EditableProject.Description;
 
-                return await projectRepository.Update(editableProject);
+                return await projectRepository.Update(savedProject);
             }
 
-            var project = new Project
-            {
-                Name = name,
-                DateRange = new DateRange
-                {
-                    StartDate = startDate ?? default,
-                    EndDate = endDate ?? default
-                },
-                Description = description
-            };
-
-            return await projectRepository.Add(project);
+            return await projectRepository.Add(EditableProject);
         }
     }
 }
