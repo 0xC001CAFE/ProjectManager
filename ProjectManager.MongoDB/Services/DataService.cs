@@ -39,7 +39,10 @@ namespace ProjectManager.MongoDB.Services
 
         public async Task<T> GetById(string id)
         {
-            return await modelCollection.Find(model => model.Id == id).SingleOrDefaultAsync();
+            return await Task.Run(() =>
+            {
+                return modelCollection.Find(model => model.Id == id).SingleOrDefault();
+            });
         }
 
         public async Task<T> UpdateById(string id, T model)
