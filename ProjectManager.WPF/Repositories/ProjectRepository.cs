@@ -83,6 +83,21 @@ namespace ProjectManager.WPF.Repositories
             return project;
         }
 
+        public async Task<ProjectTaskModel> Add(ProjectModel project, ProjectTaskModel projectTask)
+        {
+            var storedProject = await projectDataService.GetById(project.Id);
+
+            var mappedTask = new ProjectTask();
+            projectTask.MapBack(mappedTask);
+
+            GetProjectTasks(storedProject).Add(mappedTask);
+            await projectDataService.UpdateById(project.Id, storedProject);
+
+            project.Tasks.Add(projectTask);
+
+            return projectTask;
+        }
+
         public async Task<ProjectModel> Update(ProjectModel project)
         {
             var storedProject = await projectDataService.GetById(project.Id);
@@ -91,6 +106,15 @@ namespace ProjectManager.WPF.Repositories
             await projectDataService.UpdateById(storedProject.Id, storedProject);
 
             return project;
+        }
+
+        private List<ProjectTask> GetProjectTasks(Project project)
+        {
+            var projectTasks = project.Tasks == null ? new List<ProjectTask>() : new List<ProjectTask>(project.Tasks);
+
+            project.Tasks = projectTasks;
+
+            return projectTasks;
         }
     }
 }

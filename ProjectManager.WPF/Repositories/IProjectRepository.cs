@@ -18,6 +18,8 @@ namespace ProjectManager.WPF.Repositories
 
         Task<ProjectModel> Add(ProjectModel project);
 
+        Task<ProjectTaskModel> Add(ProjectModel project, ProjectTaskModel projectTask);
+
         Task<ProjectModel> Update(ProjectModel project);
     }
 }

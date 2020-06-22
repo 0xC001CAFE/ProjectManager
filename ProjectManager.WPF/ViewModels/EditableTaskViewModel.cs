@@ -17,6 +17,7 @@ namespace ProjectManager.WPF.ViewModels
     public class EditableTaskViewModel : ViewModelBase
     {
         private readonly IProjectRepository projectRepository;
+        private ProjectModel selectedProject;
         private ProjectTaskModel savedTask;
 
         #region Properties for data binding
@@ -80,25 +81,41 @@ namespace ProjectManager.WPF.ViewModels
 
                         break;
                 }
-            }, () => savedTask != null);
+            }, () =>
+            {
+                return savedTask != null || currentState == EditableTaskViewModelState.CreateNew;
+            });
 
             #endregion
 
             #region Messenger
+
+            messenger.Subscribe<SelectionChangedMessage<ProjectModel>>(message =>
+            {
+                selectedProject = message.SelectedElement;
+
+                Load();
+            });
 
             messenger.Subscribe<SelectionChangedMessage<ProjectTaskModel>>(message =>
             {
                 Load(message.SelectedElement);
             });
 
+            messenger.Subscribe<ChangeStateMessage<EditableTaskViewModelState>>(message =>
+            {
+                Load(null, message.NewState);
+            });
+
             #endregion
         }
 
-        private void Load(ProjectTaskModel projectTask = null)
+        private void Load(ProjectTaskModel projectTask = null,
+                          EditableTaskViewModelState state = EditableTaskViewModelState.DisplayOnly)
         {
             savedTask = projectTask;
 
-            CurrentState = EditableTaskViewModelState.DisplayOnly;
+            CurrentState = state;
 
             EditableTask = new ProjectTaskModel
             {
@@ -109,9 +126,11 @@ namespace ProjectManager.WPF.ViewModels
             };
         }
 
-        private async Task Save()
+        private async Task<ProjectTaskModel> Save()
         {
-            // save project task
+            // TODO: Implement update function
+
+            return await projectRepository.Add(selectedProject, editableTask);
         }
     }
 }

@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
@@ -17,8 +18,13 @@
                    Style="{StaticResource ResourceKey=HeadingMedium}"/>
 
         <ListBox Grid.Row="1"
+                 Margin="0,0,0,10"
                  ItemsSource="{Binding Path=Project.Tasks}"
                  SelectedItem="{Binding Path=SelectedTask}"
                  ItemContainerStyle="{StaticResource ResourceKey=ProjectComponent}"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Neue Aufgabe" Command="{Binding Path=NewTaskCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
