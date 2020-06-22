@@ -38,9 +38,24 @@ namespace ProjectManager.WPF.Repositories
 
                 Projects = new ObservableCollection<ProjectModel>();
 
+                // map each project and add it to the list
+
+                if (projects == null) return;
+
                 foreach (var project in projects)
                 {
-                    Projects.Add(new ProjectModel(project));
+                    var mappedProject = new ProjectModel(project);
+
+                    Projects.Add(mappedProject);
+
+                    // map tasks of the project
+
+                    if (project.Tasks == null) continue;
+
+                    foreach (var projectTask in project.Tasks)
+                    {
+                        mappedProject.Tasks.Add(new ProjectTaskModel(projectTask));
+                    }
                 }
             }
             catch (Exception exception)
