@@ -52,7 +52,7 @@ namespace ProjectManager.WPF.ViewModels
             NewTaskCommand = new RelayCommand(() =>
             {
                 messenger.Send(new ChangeStateMessage<EditableTaskViewModelState>(EditableTaskViewModelState.CreateNew));
-            });
+            }, () => project != null);
 
             #endregion
 
