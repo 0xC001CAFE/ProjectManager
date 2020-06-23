@@ -99,7 +99,7 @@ namespace ProjectManager.WPF.ViewModels
                 viewModel.Load(selectedProject);
                 CurrentMainViewModel = viewModel;
 
-                messenger.Send(new ChangeStateMessage<EditableTaskViewModelState>(EditableTaskViewModelState.DisplayOnly));
+                messenger.Send(new ChangeSelectionMessage<ProjectTaskModel>(null));
             }, () =>
             {
                 return selectedProject != null && currentMainViewModel.GetType() != typeof(EditableProjectViewModel);
@@ -112,7 +112,7 @@ namespace ProjectManager.WPF.ViewModels
                 viewModel.Load();
                 CurrentMainViewModel = viewModel;
 
-                messenger.Send(new ChangeStateMessage<EditableTaskViewModelState>(EditableTaskViewModelState.DisplayOnly));
+                messenger.Send(new ChangeSelectionMessage<ProjectTaskModel>(null));
             });
 
             #endregion
