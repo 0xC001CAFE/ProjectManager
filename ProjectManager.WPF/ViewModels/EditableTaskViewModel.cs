@@ -139,7 +139,15 @@ namespace ProjectManager.WPF.ViewModels
 
         private async Task<ProjectTaskModel> Save()
         {
-            // TODO: Implement update function
+            if (currentState == EditableTaskViewModelState.Edit)
+            {
+                savedTask.StartDate = editableTask.StartDate;
+                savedTask.EndDate = editableTask.EndDate;
+                savedTask.Name = editableTask.Name;
+                savedTask.Description = editableTask.Description;
+
+                return await projectRepository.Update(selectedProject, savedTask);
+            }
 
             return await projectRepository.Add(selectedProject, editableTask);
         }

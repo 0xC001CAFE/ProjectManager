@@ -21,5 +21,7 @@ namespace ProjectManager.WPF.Repositories
         Task<ProjectTaskModel> Add(ProjectModel project, ProjectTaskModel projectTask);
 
         Task<ProjectModel> Update(ProjectModel project);
+
+        Task<ProjectTaskModel> Update(ProjectModel project, ProjectTaskModel projectTask);
     }
 }

@@ -1,4 +1,5 @@
-﻿using ProjectManager.Domain.Models;
+﻿using MongoDB.Bson;
+using ProjectManager.Domain.Models;
 using ProjectManager.Domain.Services;
 using ProjectManager.WPF.Models;
 using System;
@@ -76,6 +77,8 @@ namespace ProjectManager.WPF.Repositories
             project.MapBack(mappedProject);
             
             await projectDataService.CreateByUserAccount(userAccount, mappedProject);
+
+            // map project to project model to get current id
             project.Map(mappedProject);
 
             Projects.Add(project);
@@ -87,11 +90,20 @@ namespace ProjectManager.WPF.Repositories
         {
             var storedProject = await projectDataService.GetById(project.Id);
 
-            var mappedTask = new ProjectTask();
-            projectTask.MapBack(mappedTask);
+            // create new project task with unique id
+            var mappedTask = new ProjectTask
+            {
+                Id = ObjectId.GenerateNewId().ToString()
+            };
 
+            // map project task model to project task and add it to the list
+            projectTask.MapBack(mappedTask);
             GetProjectTasks(storedProject).Add(mappedTask);
-            await projectDataService.UpdateById(project.Id, storedProject);
+
+            await projectDataService.UpdateById(storedProject.Id, storedProject);
+
+            // map project task to project task model to get current id
+            projectTask.Map(mappedTask);
 
             project.Tasks.Add(projectTask);
 
@@ -106,6 +118,26 @@ namespace ProjectManager.WPF.Repositories
             await projectDataService.UpdateById(storedProject.Id, storedProject);
 
             return project;
+        }
+
+        public async Task<ProjectTaskModel> Update(ProjectModel project, ProjectTaskModel projectTask)
+        {
+            var storedProject = await projectDataService.GetById(project.Id);
+
+            foreach (var storedTask in GetProjectTasks(storedProject))
+            {
+                if (storedTask.Id == projectTask.Id)
+                {
+                    // map project task model to project task
+                    projectTask.MapBack(storedTask);
+
+                    break;
+                }
+            }
+
+            await projectDataService.UpdateById(storedProject.Id, storedProject);
+
+            return projectTask;
         }
 
         private List<ProjectTask> GetProjectTasks(Project project)
