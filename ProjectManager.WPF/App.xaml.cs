@@ -4,6 +4,7 @@ using ProjectManager.MongoDB;
 using ProjectManager.MongoDB.Services;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Repositories;
+using ProjectManager.WPF.Services;
 using ProjectManager.WPF.ViewModels;
 using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.Views;
@@ -48,6 +49,7 @@ namespace ProjectManager.WPF
             });
             services.AddSingleton<IProjectDataService, ProjectDataService>();
             services.AddSingleton<IProjectRepository, ProjectRepository>();
+            services.AddSingleton<IAuthenticator, Authenticator>();
 
             #endregion
 

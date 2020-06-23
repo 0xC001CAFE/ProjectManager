@@ -2,6 +2,7 @@
 using ProjectManager.Domain.Models;
 using ProjectManager.Domain.Services;
 using ProjectManager.WPF.Models;
+using ProjectManager.WPF.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,17 +15,16 @@ namespace ProjectManager.WPF.Repositories
     public class ProjectRepository : IProjectRepository
     {
         private readonly IProjectDataService projectDataService;
-
-        // for debugging purposes only
-        private readonly UserAccount userAccount = new UserAccount { Id = "5ed13657a50aaa09184bdab9" };
+        private readonly IAuthenticator authenticator;
 
         public ObservableCollection<ProjectModel> Projects { get; private set; }
 
         public event EventHandler<ProjectsLoadedEventArgs> ProjectsLoaded;
 
-        public ProjectRepository(IProjectDataService projectDataService)
+        public ProjectRepository(IProjectDataService projectDataService, IAuthenticator authenticator)
         {
             this.projectDataService = projectDataService;
+            this.authenticator = authenticator;
 
             Load();
         }
@@ -35,7 +35,7 @@ namespace ProjectManager.WPF.Repositories
 
             try
             {
-                var projects = await projectDataService.GetAllByUserAccount(userAccount);
+                var projects = await projectDataService.GetAllByUserAccount(authenticator.CurrentUser);
 
                 Projects = new ObservableCollection<ProjectModel>();
 
@@ -77,7 +77,7 @@ namespace ProjectManager.WPF.Repositories
             var mappedProject = new Project();
             project.MapBack(mappedProject);
             
-            await projectDataService.CreateByUserAccount(userAccount, mappedProject);
+            await projectDataService.CreateByUserAccount(authenticator.CurrentUser, mappedProject);
 
             // map project to project model to get current id
             project.Map(mappedProject);
