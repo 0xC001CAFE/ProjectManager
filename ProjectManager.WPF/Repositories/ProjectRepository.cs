@@ -73,6 +73,7 @@ namespace ProjectManager.WPF.Repositories
 
         public async Task<ProjectModel> Add(ProjectModel project)
         {
+            // create new project and map project model to it
             var mappedProject = new Project();
             project.MapBack(mappedProject);
             
@@ -114,7 +115,9 @@ namespace ProjectManager.WPF.Repositories
         {
             var storedProject = await projectDataService.GetById(project.Id);
 
+            // map project model to project
             project.MapBack(storedProject);
+
             await projectDataService.UpdateById(storedProject.Id, storedProject);
 
             return project;
