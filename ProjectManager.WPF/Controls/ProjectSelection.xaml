@@ -31,12 +31,12 @@
 
             <Button Grid.Column="0"
                     Margin="0,0,10,0"
-                    Content="Bearbeiten"
-                    Command="{Binding Path=EditProjectCommand}"/>
-
-            <Button Grid.Column="1"
                     Content="Neu"
                     Command="{Binding Path=NewProjectCommand}"/>
+
+            <Button Grid.Column="1"
+                    Content="Bearbeiten"
+                    Command="{Binding Path=EditProjectCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -8,6 +8,7 @@ using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.ViewModels.States;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -60,27 +61,28 @@ namespace ProjectManager.WPF.ViewModels
 
             #region Commands
 
-            SaveCommand = new AsyncCommand(Save, () =>
+            SaveCommand = new AsyncCommand<ProjectTaskModel>(Save, () =>
             {
                 return currentState != EditableTaskViewModelState.DisplayOnly;
+            }, (success, projectTask) =>
+            {
+                if (!success)
+                {
+                    Debug.WriteLine("An error occurred while saving the project task.");
+
+                    messenger.Send(new ExceptionOccurredMessage(new Exception("Fehler beim Speichern der Aufgabe. Dieser Fehler tritt auf, wenn keine Verbindung zur Datenbank aufgebaut werden konnte.")));
+
+                    return;
+                }
+
+                if (currentState == EditableTaskViewModelState.CreateNew) messenger.Send(new ChangeSelectionMessage<ProjectTaskModel>(projectTask));
+                else CurrentState = EditableTaskViewModelState.DisplayOnly;
             });
 
             EditCancelCommand = new RelayCommand(() =>
             {
-                switch (currentState)
-                {
-                    case EditableTaskViewModelState.DisplayOnly:
-                        CurrentState = EditableTaskViewModelState.Edit;
-
-                        break;
-                    case EditableTaskViewModelState.Edit:
-                    case EditableTaskViewModelState.CreateNew:
-                        CurrentState = EditableTaskViewModelState.DisplayOnly;
-
-                        Load(savedTask);
-
-                        break;
-                }
+                if (currentState == EditableTaskViewModelState.DisplayOnly) CurrentState = EditableTaskViewModelState.Edit;
+                else Load(savedTask);
             }, () =>
             {
                 return savedTask != null || currentState == EditableTaskViewModelState.CreateNew;
@@ -104,7 +106,9 @@ namespace ProjectManager.WPF.ViewModels
 
             messenger.Subscribe<ChangeStateMessage<EditableTaskViewModelState>>(message =>
             {
-                Load(null, message.NewState);
+                if (message.NewState == EditableTaskViewModelState.Edit && savedTask == null) return;
+
+                Load(savedTask, message.NewState);
             });
 
             #endregion
@@ -116,6 +120,13 @@ namespace ProjectManager.WPF.ViewModels
             savedTask = projectTask;
 
             CurrentState = state;
+
+            if (state == EditableTaskViewModelState.CreateNew)
+            {
+                EditableTask = new ProjectTaskModel();
+
+                return;
+            }
 
             EditableTask = new ProjectTaskModel
             {

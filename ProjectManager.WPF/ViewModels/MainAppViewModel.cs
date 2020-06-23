@@ -8,6 +8,7 @@ using ProjectManager.WPF.Messaging.Messages;
 using ProjectManager.WPF.Models;
 using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
+using ProjectManager.WPF.ViewModels.States;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -97,7 +98,12 @@ namespace ProjectManager.WPF.ViewModels
 
                 viewModel.Load(selectedProject);
                 CurrentMainViewModel = viewModel;
-            }, () => selectedProject != null);
+
+                messenger.Send(new ChangeStateMessage<EditableTaskViewModelState>(EditableTaskViewModelState.DisplayOnly));
+            }, () =>
+            {
+                return selectedProject != null && currentMainViewModel.GetType() != typeof(EditableProjectViewModel);
+            });
 
             NewProjectCommand = new RelayCommand(() =>
             {
@@ -105,6 +111,8 @@ namespace ProjectManager.WPF.ViewModels
 
                 viewModel.Load();
                 CurrentMainViewModel = viewModel;
+
+                messenger.Send(new ChangeStateMessage<EditableTaskViewModelState>(EditableTaskViewModelState.DisplayOnly));
             });
 
             #endregion

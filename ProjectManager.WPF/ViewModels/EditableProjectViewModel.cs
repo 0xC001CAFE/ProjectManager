@@ -33,7 +33,17 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
-        public ProjectModel EditableProject { get; private set; }
+        private ProjectModel editableProject;
+        public ProjectModel EditableProject
+        {
+            get => editableProject;
+            private set
+            {
+                editableProject = value;
+
+                OnPropertyChanged(nameof(EditableProject));
+            }
+        }
 
         public ICommand SaveCommand { get; }
 
@@ -91,15 +101,15 @@ namespace ProjectManager.WPF.ViewModels
         {
             if (editMode)
             {
-                savedProject.StartDate = EditableProject.StartDate;
-                savedProject.EndDate = EditableProject.EndDate;
-                savedProject.Name = EditableProject.Name;
-                savedProject.Description = EditableProject.Description;
+                savedProject.StartDate = editableProject.StartDate;
+                savedProject.EndDate = editableProject.EndDate;
+                savedProject.Name = editableProject.Name;
+                savedProject.Description = editableProject.Description;
 
                 return await projectRepository.Update(savedProject);
             }
 
-            return await projectRepository.Add(EditableProject);
+            return await projectRepository.Add(editableProject);
         }
     }
 }

@@ -36,6 +36,8 @@ namespace ProjectManager.WPF.ViewModels
             {
                 selectedTask = value;
 
+                OnPropertyChanged(nameof(SelectedTask));
+
                 messenger.Send(new SelectionChangedMessage<ProjectTaskModel>(selectedTask));
             }
         }
@@ -61,6 +63,11 @@ namespace ProjectManager.WPF.ViewModels
             messenger.Subscribe<SelectionChangedMessage<ProjectModel>>(message =>
             {
                 Project = message.SelectedElement;
+            });
+
+            messenger.Subscribe<ChangeSelectionMessage<ProjectTaskModel>>(message =>
+            {
+                SelectedTask = message.NewSelectedElement;
             });
 
             #endregion
