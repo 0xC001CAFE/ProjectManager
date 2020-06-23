@@ -35,6 +35,8 @@ namespace ProjectManager.WPF.ViewModels
             }
         }
 
+        public bool ShowOverlay => !(savedTask != null || currentState == EditableTaskViewModelState.CreateNew);
+
         private ProjectTaskModel editableTask;
         public ProjectTaskModel EditableTask
         {
@@ -120,6 +122,8 @@ namespace ProjectManager.WPF.ViewModels
             savedTask = projectTask;
 
             CurrentState = state;
+
+            OnPropertyChanged(nameof(ShowOverlay));
 
             if (state == EditableTaskViewModelState.CreateNew)
             {

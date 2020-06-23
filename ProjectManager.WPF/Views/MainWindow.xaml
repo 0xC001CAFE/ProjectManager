@@ -20,7 +20,8 @@
                          Converter="{StaticResource ResourceKey=ObjectToVisibilityConverter}"/>
             </Grid.Visibility>
 
-            <StackPanel Style="{StaticResource ResourceKey=OverlayPanel}">
+            <StackPanel Style="{StaticResource ResourceKey=OverlayPanel}"
+                        VerticalAlignment="Center">
                 <TextBlock Text="{Binding Path=OverlayMessage}"
                            Style="{StaticResource ResourceKey=OverlayText}"
                            Foreground="White"/>

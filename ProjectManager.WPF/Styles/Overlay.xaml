@@ -3,7 +3,6 @@
                     xmlns:local="clr-namespace:ProjectManager.WPF.Styles">
     <!-- panel -->
     <Style x:Key="OverlayPanel" TargetType="FrameworkElement">
-        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="30"/>
     </Style>
 

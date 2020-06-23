@@ -156,8 +156,16 @@
         </Grid>
 
         <!-- overlay -->
-        <Grid>
-            
+        <Grid Background="White">
+            <Grid.Visibility>
+                <Binding Path="ShowOverlay"
+                         Converter="{StaticResource ResourceKey=BooleanToVisibilityConverter}"/>
+            </Grid.Visibility>
+
+            <StackPanel Style="{StaticResource ResourceKey=OverlayPanel}">
+                <TextBlock Text="Wähle eine Aufgabe eines Projekts."
+                           Style="{StaticResource ResourceKey=OverlayText}"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

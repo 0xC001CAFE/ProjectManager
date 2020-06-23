@@ -29,7 +29,9 @@
                 <views:EditableTaskView/>
             </DataTemplate>
 
+            <!-- converters -->
             <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
