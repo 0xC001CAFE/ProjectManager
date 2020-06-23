@@ -1,7 +1,4 @@
-﻿using ProjectManager.WPF.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace ProjectManager.WPF.Messaging.Messages
 {

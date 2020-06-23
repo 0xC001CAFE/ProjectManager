@@ -2,9 +2,6 @@
 using MongoDB.Driver;
 using ProjectManager.Domain.Models;
 using ProjectManager.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectManager.MongoDB.Services

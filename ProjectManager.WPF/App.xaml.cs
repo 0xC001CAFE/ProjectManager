@@ -9,11 +9,6 @@ using ProjectManager.WPF.ViewModels;
 using ProjectManager.WPF.ViewModels.Locator;
 using ProjectManager.WPF.Views;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProjectManager.WPF

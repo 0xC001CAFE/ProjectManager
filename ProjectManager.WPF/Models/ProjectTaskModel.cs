@@ -1,8 +1,6 @@
 ﻿using ProjectManager.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace ProjectManager.WPF.Models
 {

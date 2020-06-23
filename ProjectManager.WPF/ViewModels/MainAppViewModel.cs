@@ -1,18 +1,11 @@
-﻿using ProjectManager.Domain.Models;
-using ProjectManager.Domain.Services;
-using ProjectManager.MongoDB;
-using ProjectManager.MongoDB.Services;
-using ProjectManager.WPF.Commands;
+﻿using ProjectManager.WPF.Commands;
 using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Messaging.Messages;
 using ProjectManager.WPF.Models;
 using ProjectManager.WPF.Repositories;
 using ProjectManager.WPF.ViewModels.Locator;
-using ProjectManager.WPF.ViewModels.States;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 

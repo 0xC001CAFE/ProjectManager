@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProjectManager.WPF.Messaging.Messages
+﻿namespace ProjectManager.WPF.Messaging.Messages
 {
     public class SelectionChangedMessage<T>
     {

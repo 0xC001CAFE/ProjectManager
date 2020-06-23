@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectManager.WPF.Repositories
@@ -76,7 +75,7 @@ namespace ProjectManager.WPF.Repositories
             // create new project and map project model to it
             var mappedProject = new Project();
             project.MapBack(mappedProject);
-            
+
             await projectDataService.CreateByUserAccount(authenticator.CurrentUser, mappedProject);
 
             // map project to project model to get current id

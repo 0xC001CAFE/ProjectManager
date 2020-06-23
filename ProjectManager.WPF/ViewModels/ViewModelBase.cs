@@ -1,9 +1,6 @@
 ﻿using ProjectManager.WPF.Messaging;
 using ProjectManager.WPF.Models;
 using ProjectManager.WPF.ViewModels.Locator;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProjectManager.WPF.ViewModels
 {
